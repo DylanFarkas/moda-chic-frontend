@@ -1,0 +1,129 @@
+body {
+    font-family: "Centra No1", sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #993f6b;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.nav-categories a {
+    margin: 0 1rem;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    transition: 0.3s ease;
+
+}
+
+.nav-categories a:hover {
+    color: #993f6b;
+    font-size: 1.1rem;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.search-box {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.search-box input {
+    border: none;
+    padding: 0.5rem;
+    outline: none;
+    font-family: "Centra No1", sans-serif;
+}
+
+.search-box button {
+    background-color: #993f6b;
+    border: none;
+    color: white;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+}
+
+.icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+    transition: 0.2s ease-out;
+}
+
+.icon:hover {
+    scale: 1.1;
+    color: #993f6b;
+}
+
+/* Botón de menú hamburguesa (oculto en desktop) */
+.menu-toggle {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-categories {
+        display: none;
+        flex-direction: column;
+        background-color: white;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        padding: 1rem 2rem;
+        border-top: 1px solid #ddd;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-categories.active {
+        display: flex;
+        animation: slideDown 0.3s ease-in-out;
+    }
+
+    .nav-categories a {
+        margin-bottom: 10px;
+    }
+
+    .nav-actions {
+        display: none;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
