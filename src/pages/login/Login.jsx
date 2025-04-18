@@ -39,7 +39,7 @@ const Login = () => {
 
       <div className="login-right">
         <div className="login-box">
-          <h2>MODA CHIC</h2>
+          <h2>Login</h2>
           <form className="login-form">
             <input type="email" placeholder="Correo electrónico" required />
             <input type="password" placeholder="Contraseña" required />
