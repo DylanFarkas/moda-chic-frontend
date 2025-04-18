@@ -32,31 +32,38 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-left">
-        <img src={logo} alt="Logo" className="login-logo" />
+    <>
+      <div className="return-btn-container">
+        <button onClick={() => navigate("/")} className="return-btn">
+          ⬅ Volver
+        </button>
       </div>
 
-      <div className="login-right">
-        <div className="login-box">
-          <h2>Login</h2>
-          <form className="login-form">
-            <input type="email" placeholder="Correo electrónico" required />
-            <input type="password" placeholder="Contraseña" required />
-            <button type="submit">Iniciar Sesión</button>
-          </form>
+      <div className="login-container">
+        <div className="login-left">
+          <img src={logo} alt="Logo" className="login-logo" />
+        </div>
+        <div className="login-right">
+          <div className="login-box">
+            <h2>Login</h2>
+            <form className="login-form">
+              <input type="email" placeholder="Correo electrónico" required />
+              <input type="password" placeholder="Contraseña" required />
+              <button type="submit">Iniciar Sesión</button>
+            </form>
 
-          <button onClick={handleGoogleLogin} className="google-login-btn">
-            Iniciar sesión con Google
-          </button>
+            <button onClick={handleGoogleLogin} className="google-login-btn">
+              Iniciar sesión con Google
+            </button>
 
-          {/* Contenedor del CAPTCHA */}
-          <div className="recaptcha-container">
-            <ReCAPTCHA sitekey={SITE_KEY} onChange={onChangeCaptcha} />
+            {/* Contenedor del CAPTCHA */}
+            <div className="recaptcha-container">
+              <ReCAPTCHA sitekey={SITE_KEY} onChange={onChangeCaptcha} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
