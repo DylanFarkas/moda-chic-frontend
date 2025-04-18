@@ -1,0 +1,139 @@
+/* Contenedor principal */
+.login-container {
+  display: flex;
+  height: 100vh;
+  background-color: #6F4559;
+}
+
+/* Sección Izquierda: Logo */
+.login-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-logo {
+  width: 310px;
+  max-width: 80%;
+}
+
+/* Sección Derecha */
+.login-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F4E5CE;
+  border-radius: 120px 0px 0px 0px;
+  padding: 20px;
+}
+
+/* Formulario dentro del rectángulo */
+.login-box {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  max-width: 400px;
+  height: auto;
+  padding: 20px;
+}
+
+h2 {
+  color: #6F4559;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+/* Estilos del formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.login-form input {
+  padding: 12px;
+  border: 1px solid #6F4559;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.login-form button {
+  padding: 12px;
+  background-color: #6F4559;
+  color: #F4E5CE;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.login-form button:hover {
+  background-color: #F4E5CE;
+}
+
+.google-login-btn {
+  padding: 12px;
+  background-color: #eab15c;
+  color: #6F4559;
+  border: 1px solid #8f1f55;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.google-login-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.recaptcha-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; 
+}
+
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .login-container {
+      flex-direction: column;
+      height: auto;
+  }
+
+  .login-left {
+      flex: none;
+      padding: 20px 0;
+  }
+
+  .login-logo {
+      width: 200px;
+  }
+
+  .login-right {
+      flex: none;
+      width: 100%;
+      border-radius: 0;
+      padding: 40px 20px;
+  }
+
+  .login-box {
+      width: 100%;
+      max-width: 350px;
+  }
+
+  h2 {
+      font-size: 1.5rem;
+  }
+}
