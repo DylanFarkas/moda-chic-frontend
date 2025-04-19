@@ -1,4 +1,5 @@
 import Sidebar from "../../../components/Sidebar/Sidebar";
+import UserTable from "../../../components/UserTable/UserTable";
 import './Users.css';
 
 const Users = () => {
@@ -6,7 +7,7 @@ const Users = () => {
         <div className="users-container">
             <Sidebar />
            <div className="users-content">
-                <h1>Usuarios</h1>
+                <UserTable />
            </div>
         </div>
 
