@@ -1,11 +1,71 @@
 .users-container {
-    display: flex;
-    height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  height: 100vh;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .users-content {
-    flex: 1;
-    padding: 40px;
-    background-color: #f4f5fa;
+  flex: 1;
+  padding: 20px 40px 40px 30px;
+  background-color: #f4f5fa;
+  overflow-y: auto;
+}
+
+.users-title {
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  gap: 15px;
+  color: #2c003e;
+  margin-left: 30px;
+  margin-bottom: 35px;
+  margin-top: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.users-title::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  width: 60%;
+  height: 3px;
+  background: #993f6b;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .users-title {
+    font-size: 1.5rem;
+    margin-left: 15px;
+    gap: 10px;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .users-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .users-title {
+    font-size: 1.2rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .users-title::after {
+    bottom: -10px;
+    height: 2px;
+    width: 70%;
+  }
 }
