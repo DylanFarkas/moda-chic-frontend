@@ -15,7 +15,7 @@
 }
 
 /* Branding */
-.brand {
+.brand-title {
     font-size: 28px;
     font-weight: bold;
     text-align: center;
@@ -23,6 +23,11 @@
     color: #993f6b;
     letter-spacing: 1.5px;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.brand-title:hover {
+    color: #d46a9d;
 }
 
 /* Menu items */
@@ -48,6 +53,12 @@
 }
 
 .sidebar-menu li:hover {
+    background-color: #400050;
+    transform: translateX(5px);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.sidebar-menu li.active {
     background-color: #400050;
     transform: translateX(5px);
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);

@@ -1,3 +1,4 @@
+import ProductsTable from "../../../components/ProductsTable/ProductsTable";
 import Sidebar from "../../../components/Sidebar/Sidebar"
 import './Products.css'
 
@@ -6,8 +7,8 @@ const Products = () => {
         <div className="products-container">
             <Sidebar />
            <div className="products-content">
-                <h1>Productos</h1>
-                
+            <h1 className="products-title"> Productos </h1>
+                <ProductsTable />
            </div>
         </div>
 

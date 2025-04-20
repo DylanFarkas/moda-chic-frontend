@@ -4,7 +4,6 @@ import './UserTable.css';
 const UserTable = ({}) => {
   return (
     <div className="user-table-container">
-      <h2 className="user-table-title">Usuarios registrados</h2>
       <table className="user-table">
         <thead>
           <tr>
