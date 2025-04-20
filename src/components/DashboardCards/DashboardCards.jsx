@@ -1,7 +1,34 @@
-import { FaChartLine, FaLayerGroup, FaUsers, FaBoxOpen, FaBolt, FaUserPlus, FaList, FaCog, FaHistory } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FaChartLine, FaLayerGroup, FaUsers, FaBoxOpen, FaBolt, FaBox, FaList, FaCog, FaHistory } from "react-icons/fa";
+import { getAllProducts } from "../../api/products.api";
+import { getAllCategories } from "../../api/categories.api";
+import { useNavigate } from "react-router-dom";
+
 import './DashboardCards.css';
 
 const DashboardCards = () => {
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [totalCategories, setTotalCategories] = useState(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [productsRes, categoriesRes] = await Promise.all([
+          getAllProducts(),
+          getAllCategories(),
+        ]);
+
+        setTotalProducts(productsRes.data.length);
+        setTotalCategories(categoriesRes.data.length);
+      } catch (error) {
+        console.error("Error al obtener datos del dashboard:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="dashboard-grid">
 
@@ -16,21 +43,21 @@ const DashboardCards = () => {
             <div className="stat-circle"><FaLayerGroup /></div>
             <div className="stat-info">
               <span className="stat-label">Categorías</span>
-              <span className="stat-value">12</span>
+              <span className="stat-value">{totalCategories}</span>
             </div>
           </div>
           <div className="stat-item">
             <div className="stat-circle"><FaUsers /></div>
             <div className="stat-info">
               <span className="stat-label">Clientes</span>
-              <span className="stat-value">158</span>
+              <span className="stat-value">Falta</span>
             </div>
           </div>
           <div className="stat-item">
             <div className="stat-circle"><FaBoxOpen /></div>
             <div className="stat-info">
               <span className="stat-label">Productos</span>
-              <span className="stat-value">320</span>
+              <span className="stat-value">{totalProducts}</span>
             </div>
           </div>
         </div>
@@ -43,8 +70,8 @@ const DashboardCards = () => {
           <h3>Acciones Rápidas</h3>
         </div>
         <div className="actions-grid">
-          <button className="action-btn">
-            <FaUserPlus />
+          <button className="action-btn" onClick={() => navigate('/products?new=true')}>
+            <FaBox />
             <span>Nuevo Producto</span>
           </button>
           <button className="action-btn">
