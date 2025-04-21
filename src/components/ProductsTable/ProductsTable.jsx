@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { getAllProducts, deleteProduct } from "../../api/products.api";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 import { HiUserAdd } from "react-icons/hi";
 import AddProductForm from "../Forms/AddProductForm";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -10,7 +10,8 @@ import "./ProductsTable.css";
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
   const [showAddProductForm, setShowAddProductForm] = useState(false);
-  const [productToEdit, setProductToEdit] = useState(null); // Nuevo estado
+  const [productToEdit, setProductToEdit] = useState(null);
+  const [productToView, setProductToView] = useState(null);
   const params = useParams();
   const [searchParams] = useSearchParams();
 
@@ -54,7 +55,7 @@ const ProductsTable = () => {
               <th>Cantidad</th>
               <th>Categoría</th>
               <th>Tallas</th>
-              <th colSpan="2">Acciones</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -67,6 +68,12 @@ const ProductsTable = () => {
                 <td data-label="Tallas">{product_data.size}</td>
                 <td className="action-buttons">
                   <button
+                    className="view-button"
+                    onClick={() => setProductToView(product_data)}
+                  >
+                    <FiEye />
+                  </button>
+                  <button
                     className="edit-button"
                     onClick={() => {
                       setProductToEdit(product_data);
@@ -75,8 +82,6 @@ const ProductsTable = () => {
                   >
                     <FiEdit />
                   </button>
-                </td>
-                <td>
                   <button
                     className="delete-button"
                     onClick={async () => {
@@ -112,8 +117,22 @@ const ProductsTable = () => {
           <div className="modal-content">
             <AddProductForm
               onClose={handleCloseAddProductForm}
-              product={productToEdit} // si estás editando
+              product={productToEdit}
             />
+          </div>
+        </div>
+      )}
+
+      {productToView && (
+        <div className="modal-overlay" onClick={() => setProductToView(null)}>
+          <div className="modal-content view-modal" onClick={e => e.stopPropagation()}>
+          <h2 className="product-title-modal-view">{productToView.name}</h2>
+            <img
+              src={productToView.image}
+              alt={productToView.name}
+              className="product-img-modal-view"
+            />
+            <button className="close-button" onClick={() => setProductToView(null)}>Cerrar</button>
           </div>
         </div>
       )}
