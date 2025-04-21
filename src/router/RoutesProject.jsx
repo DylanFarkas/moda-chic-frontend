@@ -6,6 +6,7 @@ import Products from "../pages/admindashboard/products/Products.jsx";
 import Users from "../pages/admindashboard/users/Users.jsx";
 import Statistics from "../pages/admindashboard/statistics/Statistics.jsx";
 import Orders from "../pages/admindashboard/orders/Orders.jsx";
+import Categories from "../pages/admindashboard/categories/Categories.jsx";
 
 export default function RoutesProject() {
   return (
@@ -16,6 +17,7 @@ export default function RoutesProject() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<Products />} />
+        <Route path="/categories" element={<Categories />} />
         <Route path="/users" element={<Users />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/statistics" element={<Statistics />} />
