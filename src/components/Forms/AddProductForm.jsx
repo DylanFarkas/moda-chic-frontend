@@ -119,12 +119,20 @@ const AddProductForm = ({ onClose, product }) => {
 
                         <div className="form-group">
                             <label className="label-name">Talla</label>
-                            <input
-                                type="text"
+                            <select
                                 {...register("size", { required: true })}
                                 className="add-product-input"
-                            />
-                            {errors.size && <span className="add-product-error">Este campo es requerido</span>}
+                            >
+                                <option value="">Selecciona una talla</option>
+                                <option value="XS">XS</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
+                            {errors.size && (
+                                <span className="add-product-error">Este campo es requerido</span>
+                            )}
                         </div>
                     </div>
 

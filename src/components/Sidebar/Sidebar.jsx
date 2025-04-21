@@ -10,6 +10,7 @@ import {
   FaCog,
   FaUser,
 } from "react-icons/fa";
+import { BiSolidCategory } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
 import "./Sidebar.css";
 
@@ -43,6 +44,9 @@ const Sidebar = () => {
         <ul className="sidebar-menu">
           <li className={location.pathname === "/products" ? "active" : ""} onClick={() => navigate("/products")}>
             <FaBox className="sidebar-icons" /> <span>Productos</span>
+          </li>
+          <li className={location.pathname === "/categories" ? "active" : ""} onClick={() => navigate("/categories")}>
+            <BiSolidCategory className="sidebar-icons" /> <span>Categorías</span>
           </li>
           <li className={location.pathname === "/users" ? "active" : ""} onClick={() => navigate("/users")}>
             <FaUsers className="sidebar-icons" /> <span>Usuarios</span>

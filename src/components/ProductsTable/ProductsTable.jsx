@@ -64,7 +64,7 @@ const ProductsTable = () => {
                 <td data-label="Nombre">{product_data.name}</td>
                 <td data-label="Precio">{product_data.price}</td>
                 <td data-label="Cantidad">{product_data.stock}</td>
-                <td data-label="Categoría">{product_data.category?.name}</td>
+                <td data-label="Categoría">{product_data.category_name?.name}</td>
                 <td data-label="Tallas">{product_data.size}</td>
                 <td className="action-buttons">
                   <button

@@ -5,3 +5,11 @@ const categoriesApi = axios.create({
 });
 
 export const getAllCategories = () => categoriesApi.get("/");
+
+export const getCategory = (id) => categoriesApi(`/${id}/`);
+
+export const addCategory = (category) => categoriesApi.post("/", category);
+
+export const deleteCategory = (id) => categoriesApi.delete(`/${id}/`);
+
+export const updateCategory = (id, category) => categoriesApi.put(`/${id}/`, category);
