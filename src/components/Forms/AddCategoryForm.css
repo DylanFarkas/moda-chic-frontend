@@ -1,3 +1,27 @@
+.add-category-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.add-category-modal-content{
+    width: 350px; 
+    text-align: center;
+    background-color: #fff;
+    border-radius: 12px; 
+    padding: 20px; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 .add-category-title {
     font-size: 2rem;
     font-weight: 700;
@@ -82,7 +106,7 @@
 }
 
 .add-category-submit-button:hover {
-    background-color: #d46a9d;
+    background-color: #c4548a;
     transform: translateY(-1px);
 }
 

@@ -1,12 +1,11 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../../api/categories.api";
-import { addProduct } from "../../api/products.api";
+import { updateProduct } from "../../api/products.api";
 import ProductFormFields from "./ProductFormFields";
-import './AddProductForm.css';
 
-const AddProductForm = ({ onClose }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+const EditProductForm = ({ onClose, product }) => {
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
@@ -21,6 +20,18 @@ const AddProductForm = ({ onClose }) => {
         loadCategories();
     }, []);
 
+    useEffect(() => {
+        if (product && categories.length > 0) {
+            setValue("name", product.name);
+            setValue("price", product.price);
+            setValue("stock", product.stock);
+            setValue("material", product.material);
+            setValue("size", product.size);
+            setValue("category", product.category);
+            setValue("description", product.description);
+        }
+    }, [product, categories, setValue]);
+
     const onSubmit = handleSubmit(async (data) => {
         try {
             const formData = new FormData();
@@ -31,10 +42,10 @@ const AddProductForm = ({ onClose }) => {
                     formData.append(key, data[key]);
                 }
             }
-            await addProduct(formData);
+            await updateProduct(product.id, formData);
             onClose();
         } catch (error) {
-            console.error("Error al crear producto:", error);
+            console.error("Error al actualizar producto:", error);
         }
     });
 
@@ -42,16 +53,16 @@ const AddProductForm = ({ onClose }) => {
         <div className="add-product-modal-overlay">
             <div className="add-product-modal-content">
                 <form onSubmit={onSubmit} className="add-product-form">
-                    <h1 className="add-product-title">Nuevo Producto</h1>
+                    <h1 className="add-product-title">Editar Producto</h1>
                     <ProductFormFields
                         register={register}
                         errors={errors}
                         categories={categories}
-                        isEdit={false}
+                        isEdit={true}
                     />
                     <div className="add-product-actions">
                         <button type="button" onClick={onClose} className="add-product-cancel-button">Cancelar</button>
-                        <button type="submit" className="add-product-submit-button">Guardar</button>
+                        <button type="submit" className="add-product-submit-button">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -59,4 +70,4 @@ const AddProductForm = ({ onClose }) => {
     );
 };
 
-export default AddProductForm;
+export default EditProductForm;
