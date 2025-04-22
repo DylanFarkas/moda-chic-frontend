@@ -6,6 +6,7 @@ import { HiUserAdd } from "react-icons/hi";
 import AddProductForm from "../Forms/AddProductForm";
 import { useParams, useSearchParams } from "react-router-dom";
 import "./ProductsTable.css";
+import EditProductForm from "../Forms/EditProductForm";
 
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
@@ -40,7 +41,7 @@ const ProductsTable = () => {
   const handleCloseAddProductForm = async () => {
     setShowAddProductForm(false);
     setProductToEdit(null);
-    const res = await getAllProducts(); // Recarga productos después de editar o crear
+    const res = await getAllProducts();
     setProducts(res.data);
   };
 
@@ -115,10 +116,14 @@ const ProductsTable = () => {
       {showAddProductForm && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <AddProductForm
-              onClose={handleCloseAddProductForm}
-              product={productToEdit}
-            />
+            {productToEdit ? (
+              <EditProductForm
+                onClose={handleCloseAddProductForm}
+                product={productToEdit}
+              />
+            ) : (
+              <AddProductForm onClose={handleCloseAddProductForm} />
+            )}
           </div>
         </div>
       )}
@@ -126,7 +131,7 @@ const ProductsTable = () => {
       {productToView && (
         <div className="modal-overlay" onClick={() => setProductToView(null)}>
           <div className="modal-content view-modal" onClick={e => e.stopPropagation()}>
-          <h2 className="product-title-modal-view">{productToView.name}</h2>
+            <h2 className="product-title-modal-view">{productToView.name}</h2>
             <img
               src={productToView.image}
               alt={productToView.name}
