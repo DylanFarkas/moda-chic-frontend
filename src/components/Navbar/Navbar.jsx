@@ -1,41 +1,45 @@
 import { useState, useEffect } from "react";
 import { FaShoppingCart, FaUser, FaSearch, FaBars } from "react-icons/fa";
-import '../Navbar/Navbar.css';
+import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
-import { auth } from "../../firebase/config"; // Asegúrate de importar auth
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
 
-  // Detectar usuario logueado
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-
-    return () => unsubscribe();
+    const loggedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(loggedUser);
   }, []);
 
-  const handleLogout = async () => {
-    await signOut(auth);
+  const handleLogout = () => {
+    // Eliminar datos del usuario y redirigir
+    localStorage.removeItem("user");
+    localStorage.removeItem("access_token");
     setUser(null);
     setShowDropdown(false);
-    setShowLogoutModal(true);
-  
+
+    Swal.fire({
+      icon: "success",
+      title: "Sesión cerrada",
+      text: "Has cerrado sesión exitosamente.",
+      confirmButtonColor: "#d63384",
+      timer: 2000,
+      showConfirmButton: false
+    });
+
+    // Redirigir tras un pequeño delay
     setTimeout(() => {
-      setShowLogoutModal(false);
       navigate("/");
-    }, 2000); 
+    }, 2000);
   };
 
   return (
     <header className="navbar">
-      <div className="logo">Moda Chic</div>
+      <div className="logo" onClick={() => navigate("/")}>Moda Chic</div>
 
       <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
         <FaBars />
@@ -55,13 +59,12 @@ const Navbar = () => {
           <button><FaSearch /></button>
         </div>
 
-        {/* Si el usuario está logueado */}
         {user ? (
           <div className="user-info" onClick={() => setShowDropdown(!showDropdown)}>
             <FaUser className="icon" />
-            <span className="user-name">{user.displayName || user.email}</span>
             {showDropdown && (
               <div className="dropdown">
+                <p>{user.username || user.email}</p> 
                 <button onClick={handleLogout}>Cerrar sesión</button>
               </div>
             )}
@@ -71,14 +74,6 @@ const Navbar = () => {
         )}
 
         <FaShoppingCart className="icon" />
-
-        {showLogoutModal && (
-          <div className="modal-overlay">
-            <div className="modal-content">
-              <h3>Sesión cerrada con éxito ✅</h3>
-            </div>
-          </div>
-        )}
       </div>
     </header>
   );

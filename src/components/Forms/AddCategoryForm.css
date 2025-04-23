@@ -110,6 +110,17 @@
     transform: translateY(-1px);
 }
 
+.confirm-category-alert {
+    transition: all 0.3s ease;
+    font-weight: 700;
+}
+
+.confirm-category-alert:hover {
+    background: #ffe0ed;
+    color: #000;
+    transform: translateY(-2px);
+}
+
 @media (max-width: 600px) {
     .add-category-actions {
         flex-direction: column;

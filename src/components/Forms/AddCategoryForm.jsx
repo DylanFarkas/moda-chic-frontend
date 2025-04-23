@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { addCategory, updateCategory } from "../../api/categories.api";
+import Swal from "sweetalert2";
 import './AddCategoryForm.css';
 
 const AddCategoryForm = ({ onClose, category }) => {
@@ -20,12 +21,36 @@ const AddCategoryForm = ({ onClose, category }) => {
         try {
             if (category) {
                 await updateCategory(category.id, data);
+                Swal.fire({
+                    icon: "success",
+                    title: "¡Categoría actualizada!",
+                    text: "La categoría fue actualizada correctamente",
+                    confirmButtonColor: "#993f6b",
+                    customClass: {
+                        confirmButton: 'confirm-category-alert',
+                    }
+                });
             } else {
                 await addCategory(data);
+                Swal.fire({
+                    icon: "success",
+                    title: "¡Categoría creada!",
+                    text: "La nueva categoría fue añadida correctamente",
+                    confirmButtonColor: "#993f6b",
+                    customClass: {
+                        confirmButton: 'confirm-category-alert',
+                    }
+                });
             }
             onClose();
         } catch (error) {
             console.error("Error al guardar la categoría:", error);
+            Swal.fire({
+                icon: "error",
+                title: "¡Error!",
+                text: "Ocurrió un error al guardar la categoría",
+                confirmButtonColor: "#dc3545",
+            });
         }
     });
 

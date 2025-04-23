@@ -126,6 +126,39 @@
   transition: opacity 0.3s ease;
 }
 
+.confirm-logout-admin {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.confirm-logout-admin:hover {
+    background: #ffb4b4;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+.cancel-logout-admin {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.cancel-logout-admin:hover {
+    background: #e2e2e2;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+.confirm-logout-admin-success {
+    transition: all 0.3s ease;
+    font-weight: 700;
+}
+
+.confirm-logout-admin-success:hover {
+    background: #ffe0ed;
+    color: #000;
+    transform: translateY(-2px);
+}
+
 @media (max-width: 768px) {
     .sidebar {
         width: 120px;

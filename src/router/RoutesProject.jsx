@@ -7,6 +7,7 @@ import Users from "../pages/admindashboard/users/Users.jsx";
 import Statistics from "../pages/admindashboard/statistics/Statistics.jsx";
 import Orders from "../pages/admindashboard/orders/Orders.jsx";
 import Categories from "../pages/admindashboard/categories/Categories.jsx";
+import Register from "../pages/register/Register.jsx";
 
 export default function RoutesProject() {
   return (
@@ -14,6 +15,7 @@ export default function RoutesProject() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<Products />} />

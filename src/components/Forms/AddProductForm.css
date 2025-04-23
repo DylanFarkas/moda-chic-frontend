@@ -26,3 +26,14 @@
     margin-bottom: 20px;
     color: #993f6b;
 }
+
+.confirm-add-product-button-alert {
+    transition: all 0.3s ease;
+    font-weight: 700;
+}
+
+.confirm-add-product-button-alert:hover {
+    background: #ffe0ed;
+    color: #000;
+    transform: translateY(-2px);
+}

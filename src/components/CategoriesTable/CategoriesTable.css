@@ -91,3 +91,14 @@
 .action-buttons button {
     margin: 0 5px;
 }
+
+.confirm-delete-category-button-alert {
+    transition: all 0.3s ease;
+    font-weight: 700;
+}
+
+.confirm-delete-category-button-alert:hover {
+    background: #ffe0ed;
+    color: #000;
+    transform: translateY(-2px);
+}
