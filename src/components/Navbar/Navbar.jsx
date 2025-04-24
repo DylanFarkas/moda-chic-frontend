@@ -51,6 +51,24 @@ const Navbar = () => {
         <a href="#">Vestidos</a>
         <a href="#">Tops</a>
         <a href="#">Accesorios</a>
+
+        {/* Íconos móviles */}
+        <div className="mobile-icons">
+          {user ? (
+            <div className="user-info" onClick={() => setShowDropdown(!showDropdown)}>
+              <FaUser className="icon" />
+              {showDropdown && (
+                <div className="dropdown">
+                  <p>{user.username || user.email}</p>
+                  <button onClick={handleLogout}>Cerrar sesión</button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <FaUser className="icon" onClick={() => navigate('/login')} />
+          )}
+          <FaShoppingCart className="icon" />
+        </div>
       </nav>
 
       <div className="nav-actions">
@@ -64,7 +82,7 @@ const Navbar = () => {
             <FaUser className="icon" />
             {showDropdown && (
               <div className="dropdown">
-                <p>{user.username || user.email}</p> 
+                <p>{user.username || user.email}</p>
                 <button onClick={handleLogout}>Cerrar sesión</button>
               </div>
             )}

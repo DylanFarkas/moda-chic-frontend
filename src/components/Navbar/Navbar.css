@@ -83,51 +83,6 @@ body {
     color: #333;
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
-
-    .nav-categories {
-        display: none;
-        flex-direction: column;
-        background-color: white;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        padding: 1rem 2rem;
-        border-top: 1px solid #ddd;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav-categories.active {
-        display: flex;
-        animation: slideDown 0.3s ease-in-out;
-    }
-
-    .nav-categories a {
-        margin-bottom: 10px;
-    }
-
-    .nav-actions {
-        display: none;
-    }
-
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10%);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-}
-
 .modal-overlay-user {
     position: fixed;
     top: 0;
@@ -202,4 +157,95 @@ body {
 
 .dropdown button:hover {
     background-color: #a94f7c;
+}
+
+
+/* Íconos solo visibles en mobile */
+.mobile-icons {
+    display: none;
+    flex-direction: row;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    align-items: center;
+    margin-left: auto;
+}
+
+@media (max-width: 768px) {
+    .mobile-icons {
+        display: flex;
+        margin-left: 10px;
+    }
+
+    /* Ocultar los íconos originales en mobile */
+    .nav-actions {
+        display: none !important;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-categories {
+        display: none;
+        flex-direction: column;
+        background-color: white;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        padding: 1rem 2rem;
+        border-top: 1px solid #ddd;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-categories.active {
+        display: flex;
+        animation: slideDown 0.3s ease-in-out;
+    }
+
+    .nav-categories a {
+        margin-bottom: 10px;
+    }
+
+    .nav-actions {
+        display: none;
+    }
+
+    .dropdown {
+        position: absolute;
+        top: 40px;
+        left: -50px;
+        margin: auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        z-index: 300;
+    }
+
+    .dropdown p {
+        text-align: center;
+        width: 100%;
+    }
+
+    .dropdown button {
+        width: 100%;
+        text-align: center;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 }

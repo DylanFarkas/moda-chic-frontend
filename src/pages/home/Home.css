@@ -10,9 +10,10 @@
 
 .section-title {
     margin-bottom: 80px;
+    margin-top: 10px;
     text-align: center;
     position: relative;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: #333;
 }
 

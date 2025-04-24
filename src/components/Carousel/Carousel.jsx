@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import './Carousel.css'
+import './Carousel.css';
 
 const images = [
-    'src/assets/images/banner1.jpg',
-    'src/assets/images/banner2.jpg',
+    'src/assets/images/banner1.png',
+    'src/assets/images/banner2.png',
+    'src/assets/images/banner4.png',
 ];
 
 const Carousel = () => {
@@ -17,6 +18,15 @@ const Carousel = () => {
     const nextSlide = () => {
         setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1));
     };
+
+    // Auto play
+    useEffect(() => {
+        const interval = setInterval(() => {
+            nextSlide();
+        }, 3000); 
+
+        return () => clearInterval(interval); 
+    }, [current]); 
 
     return (
         <div className="carousel">
