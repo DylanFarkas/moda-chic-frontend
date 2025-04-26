@@ -4,14 +4,14 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4); 
-  backdrop-filter: blur(6px); 
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
   overflow-y: auto;
-} 
+}
 
 .add-button {
   display: flex;
@@ -135,7 +135,7 @@
 }
 
 .view-modal {
-  max-width: 400px;
+  width: 350px;
   text-align: center;
   background-color: #fff;
   border-radius: 16px;
@@ -146,11 +146,10 @@
 .product-title-modal-view {
   font-weight: 700;
   color: #993f6b;
-  margin-top: 20px;
 }
 
 .close-button {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif  ;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin-top: 30px;
   padding: 10px 30px;
   background-color: #993f6b;
@@ -170,9 +169,53 @@
 }
 
 .product-img-modal-view {
-  width: 100%;
-  height: auto;
+  width: 65%;
+  height: 65%;
   border-radius: 12px;
+}
+
+.confirm-delete-product-button-alert {
+  transition: all 0.3s ease;
+  font-weight: 700;
+}
+
+.confirm-delete-product-button-alert:hover {
+  background: #ffe0ed;
+  color: #000;
+  transform: translateY(-2px);
+}
+
+.confirm-delete-product-button {
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.confirm-delete-product-button:hover {
+  background: #ffb4b4;
+  color: #000;
+  transform: translateY(-2px);
+}
+
+.cancel-delete-product-button {
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.cancel-delete-product-button:hover {
+  background: #e2e2e2;
+  color: #000;
+  transform: translateY(-2px);
+}
+
+.confirm-add-product-button-alert {
+  transition: all 0.3s ease;
+  font-weight: 700;
+}
+
+.confirm-add-product-button-alert:hover {
+  background: #ffe0ed;
+  color: #000;
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {

@@ -7,6 +7,7 @@ import AddProductForm from "../Forms/AddProductForm";
 import { useParams, useSearchParams } from "react-router-dom";
 import "./ProductsTable.css";
 import EditProductForm from "../Forms/EditProductForm";
+import Swal from "sweetalert2";
 
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
@@ -86,15 +87,42 @@ const ProductsTable = () => {
                   <button
                     className="delete-button"
                     onClick={async () => {
-                      const accepted = window.confirm("¿Estás seguro?");
-                      if (accepted) {
+                      const result = await Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: 'Esta acción eliminará el producto permanentemente.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#aaa',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar',
+                        customClass: {
+                          confirmButton: 'confirm-delete-product-button',
+                          cancelButton: 'cancel-delete-product-button'
+                        }
+                      });
+
+                      if (result.isConfirmed) {
                         try {
                           await deleteProduct(product_data.id);
-                          toast.success("Producto eliminado correctamente");
                           setProducts(prev => prev.filter(p => p.id !== product_data.id));
+                          await Swal.fire({
+                            icon: 'success',
+                            title: '¡Eliminado!',
+                            text: 'El producto fue eliminado correctamente.',
+                            confirmButtonColor: '#993f6b',
+                            customClass: {
+                              confirmButton: 'confirm-delete-product-button-alert',
+                            }
+                          });
                         } catch (error) {
-                          toast.error("Error al eliminar el producto");
                           console.error("Error al eliminar producto:", error);
+                          await Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Hubo un problema al eliminar el producto.',
+                            confirmButtonColor: '#6F4559'
+                          });
                         }
                       }
                     }}

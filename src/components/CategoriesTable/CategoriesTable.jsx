@@ -3,7 +3,7 @@ import { getAllCategories, deleteCategory } from "../../api/categories.api";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { MdOutlineAddToPhotos } from "react-icons/md";
 import AddCategoryForm from "../Forms/AddCategoryForm";
-import { toast } from "react-hot-toast";
+import Swal from "sweetalert2";
 import "./CategoriesTable.css";
 
 const CategoriesTable = () => {
@@ -62,17 +62,44 @@ const CategoriesTable = () => {
                                     <button
                                         className="delete-button"
                                         onClick={async () => {
-                                            const accepted = window.confirm("¿Estás seguro de eliminar esta categoría?");
-                                            if (accepted) {
-                                                try {
-                                                    await deleteCategory(category_data.id);
-                                                    toast.success("Categoría eliminada correctamente");
-                                                    setCategories(prev => prev.filter(c => c.id !== category_data.id));
-                                                } catch (error) {
-                                                    toast.error("Error al eliminar la categoría");
-                                                    console.error("Error al eliminar categoría:", error);
+                                            Swal.fire({
+                                                title: "¿Estás seguro?",
+                                                text: "Esta acción eliminará la categoría permanentemente.",
+                                                icon: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#d33",
+                                                cancelButtonColor: "#6c757d",
+                                                confirmButtonText: "Sí, eliminar",
+                                                cancelButtonText: "Cancelar",
+                                                customClass: {
+                                                    confirmButton: 'confirm-delete-product-button',
+                                                    cancelButton: 'cancel-delete-product-button'
+                                                  }
+                                            }).then(async (result) => {
+                                                if (result.isConfirmed) {
+                                                    try {
+                                                        await deleteCategory(category_data.id);
+                                                        setCategories(prev => prev.filter(c => c.id !== category_data.id));
+                                                        Swal.fire({
+                                                            icon: "success",
+                                                            title: "¡Eliminada!",
+                                                            text: "La categoría fue eliminada correctamente.",
+                                                            confirmButtonColor: "#993f6b",
+                                                            customClass: {
+                                                                confirmButton: 'confirm-delete-category-button-alert'
+                                                            }
+                                                        });
+                                                    } catch (error) {
+                                                        console.error("Error al eliminar categoría:", error);
+                                                        Swal.fire({
+                                                            icon: "error",
+                                                            title: "¡Error!",
+                                                            text: "Ocurrió un error al eliminar la categoría.",
+                                                            confirmButtonColor: "#dc3545",
+                                                        });
+                                                    }
                                                 }
-                                            }
+                                            });
                                         }}
                                     >
                                         <FiTrash2 />

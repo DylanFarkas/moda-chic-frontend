@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getAllCategories } from "../../api/categories.api";
 import { addProduct } from "../../api/products.api";
 import ProductFormFields from "./ProductFormFields";
+import Swal from "sweetalert2";
 import './AddProductForm.css';
 
 const AddProductForm = ({ onClose }) => {
@@ -32,9 +33,28 @@ const AddProductForm = ({ onClose }) => {
                 }
             }
             await addProduct(formData);
-            onClose();
+
+            Swal.fire({
+                icon: 'success',
+                title: '¡Producto agregado!',
+                text: 'El producto se ha agregado correctamente.',
+                confirmButtonColor: '#993f6b',
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'confirm-add-product-button-alert'
+                }
+            }).then(() => {
+                onClose();
+            });
+
         } catch (error) {
             console.error("Error al crear producto:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un problema al crear el producto.',
+                confirmButtonColor: '#6F4559'
+            });
         }
     });
 

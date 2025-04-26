@@ -83,6 +83,105 @@ body {
     color: #333;
 }
 
+.modal-overlay-user {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.modal-content-user {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content-user h3 {
+    color: #993f6b;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Estilos para el dropdown del usuario */
+.user-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-info .user-name {
+    margin-left: 0.5rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.dropdown {
+    position: fixed;
+    top: 60px;
+    right: 30px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 150px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.dropdown p {
+    color: #993f6b;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.dropdown button {
+    background-color: #993f6b;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown button:hover {
+    background-color: #a94f7c;
+}
+
+
+/* Íconos solo visibles en mobile */
+.mobile-icons {
+    display: none;
+    flex-direction: row;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    align-items: center;
+    margin-left: auto;
+}
+
+@media (max-width: 768px) {
+    .mobile-icons {
+        display: flex;
+        margin-left: 10px;
+    }
+
+    /* Ocultar los íconos originales en mobile */
+    .nav-actions {
+        display: none !important;
+    }
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
     .menu-toggle {
@@ -115,6 +214,29 @@ body {
         display: none;
     }
 
+    .dropdown {
+        position: absolute;
+        top: 40px;
+        left: -50px;
+        margin: auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        z-index: 300;
+    }
+
+    .dropdown p {
+        text-align: center;
+        width: 100%;
+    }
+
+    .dropdown button {
+        width: 100%;
+        text-align: center;
+    }
+
     @keyframes slideDown {
         from {
             opacity: 0;
@@ -126,37 +248,4 @@ body {
             transform: translateY(0);
         }
     }
-}
-
-.user-info {
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: rgb(0, 0, 0);
-}
-
-.user-name {
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.dropdown {
-    position: absolute;
-    top: 30px;
-    right: 0;
-    background: white;
-    border: 1px solid #ccc;
-    padding: 0.5rem;
-    z-index: 10;
-    border-radius: 5px;
-}
-
-.dropdown button {
-    background: none;
-    border: none;
-    color: black;
-    cursor: pointer;
-    font-size: 0.9rem;
 }

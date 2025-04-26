@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FaChartLine, FaLayerGroup, FaUsers, FaBoxOpen, FaBolt, FaBox, FaList, FaCog, FaHistory } from "react-icons/fa";
 import { getAllProducts } from "../../api/products.api";
 import { getAllCategories } from "../../api/categories.api";
+import { getUsers } from "../../api/users.api";
 import { useNavigate } from "react-router-dom";
 
 import './DashboardCards.css';
@@ -9,18 +10,22 @@ import './DashboardCards.css';
 const DashboardCards = () => {
   const [totalProducts, setTotalProducts] = useState(0);
   const [totalCategories, setTotalCategories] = useState(0);
+  const [totalUsers, setTotalUsers] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [productsRes, categoriesRes] = await Promise.all([
+        const [productsRes, categoriesRes, usersRes] = await Promise.all([
           getAllProducts(),
           getAllCategories(),
+          getUsers(),
         ]);
 
         setTotalProducts(productsRes.data.length);
         setTotalCategories(categoriesRes.data.length);
+        setTotalUsers(usersRes.data.length);
+        
       } catch (error) {
         console.error("Error al obtener datos del dashboard:", error);
       }
@@ -50,7 +55,7 @@ const DashboardCards = () => {
             <div className="stat-circle"><FaUsers /></div>
             <div className="stat-info">
               <span className="stat-label">Clientes</span>
-              <span className="stat-value">Falta</span>
+              <span className="stat-value">{totalUsers}</span>
             </div>
           </div>
           <div className="stat-item">

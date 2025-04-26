@@ -140,6 +140,34 @@ h2 {
   transform: scale(1.03);
 }
 
+.no-account-text {
+  margin-top: 20px;
+  margin-left: 30px;
+  font-weight: 500;
+  color: #313131;
+}
+
+.register-link {
+  margin-left: 20px;
+  color: #883460;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.register-link:hover {
+  color: #8d5471;
+}
+
+.forgot-password {
+  margin-top: 20px;
+}
+
+.forgot-password-link {
+  text-decoration: none;
+  color: #6F4559;
+}
+
+
 /* CAPTCHA */
 .recaptcha-container {
   display: flex;

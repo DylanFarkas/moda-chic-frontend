@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { getAllCategories } from "../../api/categories.api";
 import { updateProduct } from "../../api/products.api";
 import ProductFormFields from "./ProductFormFields";
+import Swal from 'sweetalert2';
+import './EditProductForm.css';
 
 const EditProductForm = ({ onClose, product }) => {
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
@@ -42,10 +44,29 @@ const EditProductForm = ({ onClose, product }) => {
                     formData.append(key, data[key]);
                 }
             }
+
             await updateProduct(product.id, formData);
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Producto actualizado',
+                text: 'El producto ha sido editado correctamente.',
+                confirmButtonColor: '#993f6b',
+                customClass: {
+                    confirmButton: 'confirm-button-alert'
+                }
+            });
+
             onClose();
         } catch (error) {
             console.error("Error al actualizar producto:", error);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo actualizar el producto.',
+                confirmButtonColor: '#6F4559'
+            });
         }
     });
 

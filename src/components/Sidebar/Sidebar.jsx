@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 import "./Sidebar.css";
 
 const Sidebar = () => {
@@ -26,13 +27,47 @@ const Sidebar = () => {
     }
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate("/");
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
-    }
+  const handleLogout = () => {
+    Swal.fire({
+      title: "¿Cerrar sesión?",
+      text: "¿Estás seguro de que deseas salir?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "Sí, cerrar sesión",
+      cancelButtonText: "Cancelar",
+      customClass: {
+        confirmButton: 'confirm-logout-admin',
+        cancelButton: 'cancel-logout-admin',
+      }
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await signOut(auth);
+          localStorage.removeItem("user");
+          localStorage.removeItem("access_token");
+          Swal.fire({
+            icon: "success",
+            title: "Sesión cerrada",
+            text: "Has cerrado sesión exitosamente.",
+            confirmButtonColor: "#993f6b",
+            customClass: {
+              confirmButton: 'confirm-logout-admin-success',
+            }
+          }).then(() => {
+            navigate("/");
+          });
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un problema al cerrar sesión.",
+            confirmButtonColor: "#dc3545",
+          });
+        }
+      }
+    });
   };
 
   return (
