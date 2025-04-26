@@ -158,6 +158,16 @@ h2 {
   color: #8d5471;
 }
 
+.forgot-password {
+  margin-top: 20px;
+}
+
+.forgot-password-link {
+  text-decoration: none;
+  color: #6F4559;
+}
+
+
 /* CAPTCHA */
 .recaptcha-container {
   display: flex;

@@ -13,40 +13,40 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-// Login.js
-const handleLogin = async (e) => {
-  e.preventDefault();
+  // Login.js
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  if (!captchaValido) {
-    alert("Por favor, verifica el reCAPTCHA");
-    return;
-  }
-
-  console.log("Email:", email);
-  console.log("Password:", password);
-
-  try {
-    const data = await loginUser(email, password);
-    console.log("Respuesta del backend:", data); 
-    
-    // Guardar datos del usuario y token en localStorage
-    localStorage.setItem("user", JSON.stringify(data.user));
-    localStorage.setItem("access_token", data.access);
-
-    // Redirección según tipo de usuario
-    if (data.user.is_admin) {
-      navigate("/admin");
-    } else {
-      navigate("/");
+    if (!captchaValido) {
+      alert("Por favor, verifica el reCAPTCHA");
+      return;
     }
 
-  } catch (error) {
-    console.error("Error al iniciar sesión:", error.response?.data || error.message);
-    alert("Credenciales incorrectas");
-  }
-};
+    console.log("Email:", email);
+    console.log("Password:", password);
 
-  
+    try {
+      const data = await loginUser(email, password);
+      console.log("Respuesta del backend:", data);
+
+      // Guardar datos del usuario y token en localStorage
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("access_token", data.access);
+
+      // Redirección según tipo de usuario
+      if (data.user.is_admin) {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error.response?.data || error.message);
+      alert("Credenciales incorrectas");
+    }
+  };
+
+
   const onChangeCaptcha = (value) => {
     setCaptchaValido(true);
   };
@@ -91,6 +91,11 @@ const handleLogin = async (e) => {
 
             <div className="recaptcha-container">
               <ReCAPTCHA sitekey={SITE_KEY} onChange={onChangeCaptcha} />
+            </div>
+            <div className="forgot-password">
+              <a onClick={() => navigate("/forgot-password")} className="forgot-password-link">
+                ¿Olvidaste tu contraseña?
+              </a>
             </div>
           </div>
         </div>

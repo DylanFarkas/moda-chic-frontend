@@ -17,3 +17,17 @@ export const loginUser = async (email, password) => {
 };
 
 export const getUsers = () => usersApi.get("users/");
+
+// Solicitar recuperación de contraseña
+export const requestPasswordReset = (email) => {
+  return usersApi.post('password-reset/', { email });
+};
+
+// Confirmar nueva contraseña
+export const confirmPasswordReset = (uidb64, token, newPassword) => {
+  return usersApi.post('password-reset-confirm/', {
+    uidb64,
+    token,
+    new_password: newPassword,
+  });
+};
