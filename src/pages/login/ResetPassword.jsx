@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { confirmPasswordReset } from "../../api/users.api";
+import "./ResetPassword.css"; 
 
 const ResetPassword = () => {
   const { uidb64, token } = useParams();
@@ -21,17 +22,19 @@ const ResetPassword = () => {
 
   return (
     <div className="reset-password-container">
-      <h2>Restablecer contraseña</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="password"
-          placeholder="Nueva contraseña"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Actualizar contraseña</button>
-      </form>
+      <div className="reset-password-box">
+        <h2>Restablecer contraseña</h2>
+        <form className="reset-password-form" onSubmit={handleSubmit}>
+          <input
+            type="password"
+            placeholder="Nueva contraseña"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Actualizar contraseña</button>
+        </form>
+      </div>
     </div>
   );
 };
