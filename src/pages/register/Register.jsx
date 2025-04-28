@@ -1,21 +1,34 @@
 import React, { useState } from 'react';
 import { registerUser } from '../../api/users.api';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2'; // Importación de SweetAlert2
+import Swal from 'sweetalert2';
 import logo from "../../assets/images/logo.png";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import './Register.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({ username: '', email: '', password: '' });
   const [message, setMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      setMessage("La contraseña debe tener al menos 6 caracteres y un caracter especial.");
+      return;
+    }
+
     try {
       await registerUser(formData);
 
@@ -52,7 +65,21 @@ const Register = () => {
             <form className="register-form" onSubmit={handleSubmit}>
               <input type="text" name="username" placeholder="Nombre de usuario" onChange={handleChange} className="input" required />
               <input type="email" name="email" placeholder="Correo electrónico" onChange={handleChange} className="input" required />
-              <input type="password" name="password" placeholder="Contraseña" onChange={handleChange} className="input" required />
+
+              <div className="password-input-register-container">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Contraseña"
+                  onChange={handleChange}
+                  className="input password-input-register"
+                  required
+                />
+                <span className="eye-icon-register" onClick={togglePasswordVisibility}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+
               <button type="submit"> Registrarse </button>
               {message && <p className="register-error-message">{message}</p>}
               <p className="account-login">

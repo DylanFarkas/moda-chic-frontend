@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import ReCAPTCHA from "react-google-recaptcha";
-import { loginUser } from "../../api/users.api"; // 👈 Nuevo
+import { loginUser } from "../../api/users.api";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./Login.css";
 
 const SITE_KEY = "6LeY7wErAAAAAPNbS-Pip7-ABlTYDtfTSp44nV0F";
@@ -12,6 +13,7 @@ const Login = () => {
   const [captchaValido, setCaptchaValido] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   // Login.js
   const handleLogin = async (e) => {
@@ -51,6 +53,10 @@ const Login = () => {
     setCaptchaValido(true);
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <div className="return-btn-container">
@@ -76,13 +82,21 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              <input
-                type="password"
-                placeholder="Contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+
+              <div className="password-input-login-container">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="password-input-login"
+                />
+                <span className="eye-icon-login" onClick={togglePasswordVisibility}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
+              </div>
+
               <button type="submit">Iniciar Sesión</button>
               <p className="no-account-text"> ¿Aún no tienes cuenta?
                 <a className="register-link" onClick={() => navigate('/register')}> Registrate </a>
