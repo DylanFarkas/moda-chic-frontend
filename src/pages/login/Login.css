@@ -164,9 +164,38 @@ h2 {
 
 .forgot-password-link {
   text-decoration: none;
-  color: #6F4559;
+  color: #883460;
+  cursor: pointer;
 }
 
+.forgot-password-link:hover {
+  color: #8d5471;
+}
+
+.password-input-login-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-input-login {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.eye-icon-login {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6F4559;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.eye-icon-login:hover {
+  color: #ac728e;
+}
 
 /* CAPTCHA */
 .recaptcha-container {
