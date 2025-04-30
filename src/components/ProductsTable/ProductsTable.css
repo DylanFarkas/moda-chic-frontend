@@ -52,6 +52,7 @@
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   background-color: white;
+  cursor: default;
 }
 
 .products-table {
@@ -216,6 +217,36 @@
   background: #ffe0ed;
   color: #000;
   transform: translateY(-2px);
+}
+
+.sizes-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.size-badge {
+  background-color: #fce4ec;
+  color: #ad1457;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  cursor: default;
+  transition: all 0.3s ease;
+}
+
+.size-badge:hover {
+  background-color: #f8bbd0;
+  transform: scale(1.05);
+}
+
+.no-sizes {
+  color: #999;
+  font-style: italic;
 }
 
 @media (max-width: 768px) {

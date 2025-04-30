@@ -54,9 +54,8 @@ const ProductsTable = () => {
             <tr>
               <th>Nombre</th>
               <th>Precio</th>
-              <th>Cantidad</th>
               <th>Categoría</th>
-              <th>Tallas</th>
+              <th>Tallas / Stock</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -65,9 +64,22 @@ const ProductsTable = () => {
               <tr key={product_data.id}>
                 <td data-label="Nombre">{product_data.name}</td>
                 <td data-label="Precio">{product_data.price}</td>
-                <td data-label="Cantidad">{product_data.stock}</td>
                 <td data-label="Categoría">{product_data.category_name?.name}</td>
-                <td data-label="Tallas">{product_data.size}</td>
+                <td data-label="Tallas">
+                  <div className="sizes-wrapper">
+                    {product_data.size_stock && product_data.size_stock.length > 0 ? (
+                      product_data.size_stock.map((item, index) => (
+                        <span key={index} className="size-badge">
+                          {item.size.name}: <strong>{item.stock}</strong>
+                        </span>
+                      ))
+                    ) : (
+                      <span className="no-sizes">No hay tallas</span>
+                    )}
+                  </div>
+                </td>
+
+
                 <td className="action-buttons">
                   <button
                     className="view-button"

@@ -1,38 +1,53 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../../api/categories.api";
-import { updateProduct } from "../../api/products.api";
+import { getAllSizes, updateProduct } from "../../api/products.api";
 import ProductFormFields from "./ProductFormFields";
 import Swal from 'sweetalert2';
 import './EditProductForm.css';
 
 const EditProductForm = ({ onClose, product }) => {
-    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue, control } = useForm();
     const [categories, setCategories] = useState([]);
+    const [sizes, setSizes] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function loadCategories() {
+        async function loadData() {
             try {
-                const res = await getAllCategories();
-                setCategories(res.data);
+                setLoading(true);
+                const [categoriesRes, sizesRes] = await Promise.all([
+                    getAllCategories(),
+                    getAllSizes()
+                ]);
+                
+                setCategories(categoriesRes.data);
+                setSizes(sizesRes.data);
+                
+                if (product) {
+                    setValue("name", product.name);
+                    setValue("price", product.price);
+                    setValue("material", product.material);
+                    setValue("category", product.category);
+                    setValue("description", product.description);
+
+                    // Normalizar las tallas
+                    const formattedSizeStock = product.size_stock.map(item => ({
+                        size: item.size?.name || item.size,
+                        stock: item.stock
+                    }));
+                    
+                    setValue("sizeStock", formattedSizeStock);
+                }
             } catch (error) {
-                console.error("Error al cargar categorías:", error);
+                console.error("Error al cargar datos:", error);
+            } finally {
+                setLoading(false);
             }
         }
-        loadCategories();
-    }, []);
-
-    useEffect(() => {
-        if (product && categories.length > 0) {
-            setValue("name", product.name);
-            setValue("price", product.price);
-            setValue("stock", product.stock);
-            setValue("material", product.material);
-            setValue("size", product.size);
-            setValue("category", product.category);
-            setValue("description", product.description);
-        }
-    }, [product, categories, setValue]);
+        
+        loadData();
+    }, [product, setValue]);
 
     const onSubmit = handleSubmit(async (data) => {
         try {
@@ -40,6 +55,9 @@ const EditProductForm = ({ onClose, product }) => {
             for (const key in data) {
                 if (key === "image" && data.image.length > 0) {
                     formData.append("image", data.image[0]);
+                } else if (key === "sizeStock") {
+                    // Enviar las tallas como JSON
+                    formData.append("sizes_json", JSON.stringify(data.sizeStock));
                 } else {
                     formData.append(key, data[key]);
                 }
@@ -60,7 +78,6 @@ const EditProductForm = ({ onClose, product }) => {
             onClose();
         } catch (error) {
             console.error("Error al actualizar producto:", error);
-
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -69,6 +86,10 @@ const EditProductForm = ({ onClose, product }) => {
             });
         }
     });
+
+    if (loading) {
+        return <div className="loading-overlay">Cargando...</div>;
+    }
 
     return (
         <div className="add-product-modal-overlay">
@@ -80,6 +101,10 @@ const EditProductForm = ({ onClose, product }) => {
                         errors={errors}
                         categories={categories}
                         isEdit={true}
+                        sizes={sizes}
+                        initialSizeStock={product.size_stock}
+                        control={control}
+                        setValue={setValue}
                     />
                     <div className="add-product-actions">
                         <button type="button" onClick={onClose} className="add-product-cancel-button">Cancelar</button>

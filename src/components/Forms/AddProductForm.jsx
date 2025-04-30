@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../../api/categories.api";
-import { addProduct } from "../../api/products.api";
+import { addProduct, getAllSizes } from "../../api/products.api";
 import ProductFormFields from "./ProductFormFields";
 import Swal from "sweetalert2";
 import './AddProductForm.css';
@@ -9,6 +9,7 @@ import './AddProductForm.css';
 const AddProductForm = ({ onClose }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [categories, setCategories] = useState([]);
+    const [sizes, setSizes] = useState([]);
 
     useEffect(() => {
         async function loadCategories() {
@@ -22,16 +23,36 @@ const AddProductForm = ({ onClose }) => {
         loadCategories();
     }, []);
 
+    useEffect(() => {
+        async function loadSizes() {
+            try {
+                const res = await getAllSizes();
+                setSizes(res.data);
+            } catch (error) {
+                console.error("Error al cargar tallas:", error);
+            }
+        }
+        loadSizes();
+    }, []);
+
     const onSubmit = handleSubmit(async (data) => {
         try {
             const formData = new FormData();
             for (const key in data) {
                 if (key === "image" && data.image.length > 0) {
                     formData.append("image", data.image[0]);
+                } else if (key === "sizeStock") {
+                    const sizeStockJson = JSON.stringify(data.sizeStock);
+                    formData.append("sizes_json", sizeStockJson);
                 } else {
                     formData.append(key, data[key]);
                 }
             }
+
+            for (const pair of formData.entries()) {
+                console.log(pair[0], pair[1]);
+            }
+        
             await addProduct(formData);
 
             Swal.fire({
@@ -68,6 +89,7 @@ const AddProductForm = ({ onClose }) => {
                         errors={errors}
                         categories={categories}
                         isEdit={false}
+                        sizes={sizes}
                     />
                     <div className="add-product-actions">
                         <button type="button" onClick={onClose} className="add-product-cancel-button">Cancelar</button>
