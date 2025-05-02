@@ -52,6 +52,7 @@
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   background-color: white;
+  cursor: default;
 }
 
 .products-table {
@@ -216,6 +217,81 @@
   background: #ffe0ed;
   color: #000;
   transform: translateY(-2px);
+}
+
+.sizes-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.size-badge {
+  background-color: #fce4ec;
+  color: #ad1457;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  cursor: default;
+  transition: all 0.3s ease;
+}
+
+.size-badge:hover {
+  background-color: #f8bbd0;
+  transform: scale(1.05);
+}
+
+.no-sizes {
+  color: #999;
+  font-style: italic;
+}
+
+.gallery-modal-table-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.main-image-gallery-table-container {
+  width: 90%;
+  max-width: 500px;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.main-product-image {
+  width: 60%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.thumbnails-table-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Cambiar a contain si es necesario */
+.thumbnail-table-view-product {
+  width: 80px;
+  height: 80px;
+  object-fit: cover; 
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.thumbnail-table-view-product:hover {
+  transform: scale(1.05);
+  border-color: #993f6b;
 }
 
 @media (max-width: 768px) {

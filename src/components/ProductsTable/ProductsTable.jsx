@@ -16,6 +16,7 @@ const ProductsTable = () => {
   const [productToView, setProductToView] = useState(null);
   const params = useParams();
   const [searchParams] = useSearchParams();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   console.log(params);
 
@@ -54,9 +55,8 @@ const ProductsTable = () => {
             <tr>
               <th>Nombre</th>
               <th>Precio</th>
-              <th>Cantidad</th>
               <th>Categoría</th>
-              <th>Tallas</th>
+              <th>Tallas / Stock</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -65,13 +65,29 @@ const ProductsTable = () => {
               <tr key={product_data.id}>
                 <td data-label="Nombre">{product_data.name}</td>
                 <td data-label="Precio">{product_data.price}</td>
-                <td data-label="Cantidad">{product_data.stock}</td>
                 <td data-label="Categoría">{product_data.category_name?.name}</td>
-                <td data-label="Tallas">{product_data.size}</td>
+                <td data-label="Tallas">
+                  <div className="sizes-wrapper">
+                    {product_data.size_stock && product_data.size_stock.length > 0 ? (
+                      product_data.size_stock.map((item, index) => (
+                        <span key={index} className="size-badge">
+                          {item.size.name}: <strong>{item.stock}</strong>
+                        </span>
+                      ))
+                    ) : (
+                      <span className="no-sizes">No hay tallas</span>
+                    )}
+                  </div>
+                </td>
+
+
                 <td className="action-buttons">
                   <button
                     className="view-button"
-                    onClick={() => setProductToView(product_data)}
+                    onClick={() => {
+                      console.log("Imágenes adicionales:", product_data.additional_images);
+                      setProductToView(product_data);
+                    }}
                   >
                     <FiEye />
                   </button>
@@ -158,17 +174,47 @@ const ProductsTable = () => {
 
       {productToView && (
         <div className="modal-overlay" onClick={() => setProductToView(null)}>
-          <div className="modal-content view-modal" onClick={e => e.stopPropagation()}>
+          <div className="modal-content view-modal" onClick={(e) => e.stopPropagation()}>
             <h2 className="product-title-modal-view">{productToView.name}</h2>
-            <img
-              src={productToView.image}
-              alt={productToView.name}
-              className="product-img-modal-view"
-            />
-            <button className="close-button" onClick={() => setProductToView(null)}>Cerrar</button>
+
+            <div className="gallery-modal-table-view">
+              <div className="main-image-gallery-table-container">
+                <img
+                  src={selectedImage || productToView.main_image}
+                  alt={productToView.name}
+                  className="main-product-image"
+                />
+              </div>
+
+              <div className="thumbnails-table-container">
+                <img
+                  src={productToView.main_image}
+                  alt="Imagen principal"
+                  className="thumbnail-table-view-product"
+                  onClick={() => setSelectedImage(productToView.main_image)}
+                />
+                {productToView.additional_images?.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img.image}
+                    alt={`Imagen adicional ${index + 1}`}
+                    className="thumbnail-table-view-product"
+                    onClick={() => setSelectedImage(img.image)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <button className="close-button" onClick={() => {
+              setProductToView(null);
+              setSelectedImage(null);
+            }}>
+              Cerrar
+            </button>
           </div>
         </div>
       )}
+
     </div>
   );
 };

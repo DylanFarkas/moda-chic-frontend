@@ -1,14 +1,15 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../../api/categories.api";
-import { addProduct } from "../../api/products.api";
+import { addProduct, getAllSizes } from "../../api/products.api";
 import ProductFormFields from "./ProductFormFields";
 import Swal from "sweetalert2";
 import './AddProductForm.css';
 
 const AddProductForm = ({ onClose }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [categories, setCategories] = useState([]);
+    const [sizes, setSizes] = useState([]);
 
     useEffect(() => {
         async function loadCategories() {
@@ -22,16 +23,51 @@ const AddProductForm = ({ onClose }) => {
         loadCategories();
     }, []);
 
+    useEffect(() => {
+        async function loadSizes() {
+            try {
+                const res = await getAllSizes();
+                setSizes(res.data);
+            } catch (error) {
+                console.error("Error al cargar tallas:", error);
+            }
+        }
+        loadSizes();
+    }, []);
+
     const onSubmit = handleSubmit(async (data) => {
         try {
             const formData = new FormData();
-            for (const key in data) {
-                if (key === "image" && data.image.length > 0) {
-                    formData.append("image", data.image[0]);
-                } else {
-                    formData.append(key, data[key]);
+
+            // Imagen principal
+            if (data.main_image && data.main_image.length > 0) {
+                formData.append("main_image", data.main_image[0]);
+            }
+
+            // Imágenes adicionales
+            if (data.additional_images && data.additional_images.length > 0) {
+                for (let i = 0; i < data.additional_images.length; i++) {
+                    formData.append("additional_images", data.additional_images[i]);
                 }
             }
+
+            // Tallas y stock
+            if (data.sizeStock) {
+                const sizeStockJson = JSON.stringify(data.sizeStock);
+                formData.append("sizes_json", sizeStockJson);
+            }
+
+            // Otros campos
+            for (const key in data) {
+                if (["main_image", "additional_images", "sizeStock"].includes(key)) continue;
+                formData.append(key, data[key]);
+            }
+
+            // (Opcional) Verificar lo que se está enviando
+            for (const pair of formData.entries()) {
+                console.log(pair[0], pair[1]);
+            }
+
             await addProduct(formData);
 
             Swal.fire({
@@ -58,6 +94,7 @@ const AddProductForm = ({ onClose }) => {
         }
     });
 
+
     return (
         <div className="add-product-modal-overlay">
             <div className="add-product-modal-content">
@@ -68,6 +105,8 @@ const AddProductForm = ({ onClose }) => {
                         errors={errors}
                         categories={categories}
                         isEdit={false}
+                        sizes={sizes}
+                        setValue={setValue}
                     />
                     <div className="add-product-actions">
                         <button type="button" onClick={onClose} className="add-product-cancel-button">Cancelar</button>
