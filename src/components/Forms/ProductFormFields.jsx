@@ -57,113 +57,126 @@ const ProductFormFields = ({ register, errors, categories, isEdit, sizes, initia
 
     return (
         <>
-        <div className="form-products">
-            <div className="form-row">
-                <div className="form-group">
-                    <label className="label-name">Nombre del producto</label>
-                    <input type="text" {...register("name", { required: true })} className="add-product-input name-a" />
-                    {errors.name && <span className="add-product-error">Este campo es requerido</span>}
-                </div>
-
-                <div className="form-group">
-                    <label className="label-name">Precio</label>
-                    <input type="number" {...register("price", { required: true })} className="add-product-input price" />
-                    {errors.price && <span className="add-product-error">Este campo es requerido</span>}
-                </div>
-
-                <div className="form-group">
-                    <label className="label-name">Material</label>
-                    <input type="text" {...register("material", { required: true })} className="add-product-input" />
-                    {errors.material && <span className="add-product-error">Este campo es requerido</span>}
-                </div>
-
-                <div className="form-group">
-                    <label className="label-name">Categoría</label>
-                    <select {...register("category", { required: true })} className="add-product-select">
-                        <option value="">Seleccione una Categoría</option>
-                        {categories.map((cat) => (
-                            <option key={cat.id} value={cat.id}>{cat.name}</option>
-                        ))}
-                    </select>
-                    {errors.category && <span className="add-product-error">Este campo es requerido</span>}
-                </div>
-            </div>
-
-            <div className="form-row">
-                <div className="form-group">
-                    <label className="label-name">Descripción</label>
-                    <textarea {...register("description", { required: true })} className="add-product-textarea" />
-                    {errors.description && <span className="add-product-error">Este campo es requerido</span>}
-                </div>
-            </div>
-
-            <div className="form-group">
-                <label className="label-name">Tallas y Stock</label>
-                {sizeStock.map((entry, index) => (
-                    <div key={index} className="size-stock-group">
-                        <div className="form-row">
-                            <div className="form-group">
-                                <select
-                                    {...register(`sizeStock[${index}].size`, { required: true })}
-                                    value={entry.size || ""}
-                                    onChange={(e) => handleSizeStockChange(index, "size", e.target.value)}
-                                    className="add-product-input"
-                                >
-                                    <option value="">Selecciona una talla</option>
-                                    {getAvailableSizes(index).map((sizeItem) => (
-                                        <option key={sizeItem.id} value={sizeItem.name}>
-                                            {sizeItem.name}
-                                        </option>
-                                    ))}
-                                </select>
-                                {errors.sizeStock?.[index]?.size && (
-                                    <span className="add-product-error">Este campo es requerido</span>
-                                )}
-                            </div>
-
-                            <div className="form-group">
-                                <input
-                                    type="number"
-                                    {...register(`sizeStock[${index}].stock`, { required: true })}
-                                    value={entry.stock || ""}
-                                    onChange={(e) => handleSizeStockChange(index, "stock", e.target.value)}
-                                    className="add-product-input"
-                                    placeholder="Stock"
-                                />
-
-                                {errors.sizeStock?.[index]?.stock && (
-                                    <span className="add-product-error">Este campo es requerido</span>
-                                )}
-                            </div>
-
-                            <button
-                                type="button"
-                                onClick={() => handleRemoveSizeStock(index)}
-                                className="remove-size-button"
-                            >
-                                Eliminar
-                            </button>
-                        </div>
+            <div className="form-products">
+                <div className="form-row">
+                    <div className="form-group">
+                        <label className="label-name">Nombre del producto</label>
+                        <input type="text" {...register("name", { required: true })} className="add-product-input name-a" />
+                        {errors.name && <span className="add-product-error">Este campo es requerido</span>}
                     </div>
-                ))}
-                <button type="button" onClick={handleAddSizeStock} className="add-size-button">
-                    Agregar Talla
-                </button>
-            </div>
 
-            {!isEdit && (
-                <div className="form-group">
-                    <label className="label-name">Imagen</label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        {...register("image", { required: true })}
-                        className="add-product-file"
-                    />
-                    {errors.image && <span className="add-product-error">Este campo es requerido</span>}
+                    <div className="form-group">
+                        <label className="label-name">Precio</label>
+                        <input type="number" {...register("price", { required: true })} className="add-product-input price" />
+                        {errors.price && <span className="add-product-error">Este campo es requerido</span>}
+                    </div>
+
+                    <div className="form-group">
+                        <label className="label-name">Material</label>
+                        <input type="text" {...register("material", { required: true })} className="add-product-input" />
+                        {errors.material && <span className="add-product-error">Este campo es requerido</span>}
+                    </div>
+
+                    <div className="form-group">
+                        <label className="label-name">Categoría</label>
+                        <select {...register("category", { required: true })} className="add-product-select">
+                            <option value="">Seleccione una Categoría</option>
+                            {categories.map((cat) => (
+                                <option key={cat.id} value={cat.id}>{cat.name}</option>
+                            ))}
+                        </select>
+                        {errors.category && <span className="add-product-error">Este campo es requerido</span>}
+                    </div>
                 </div>
-            )}
-        </div>
+
+                <div className="form-row">
+                    <div className="form-group">
+                        <label className="label-name">Descripción</label>
+                        <textarea {...register("description", { required: true })} className="add-product-textarea" />
+                        {errors.description && <span className="add-product-error">Este campo es requerido</span>}
+                    </div>
+                </div>
+
+                <div className="form-group">
+                    <label className="label-name">Tallas y Stock</label>
+                    {sizeStock.map((entry, index) => (
+                        <div key={index} className="size-stock-group">
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <select
+                                        {...register(`sizeStock[${index}].size`, { required: true })}
+                                        value={entry.size || ""}
+                                        onChange={(e) => handleSizeStockChange(index, "size", e.target.value)}
+                                        className="add-product-input"
+                                    >
+                                        <option value="">Selecciona una talla</option>
+                                        {getAvailableSizes(index).map((sizeItem) => (
+                                            <option key={sizeItem.id} value={sizeItem.name}>
+                                                {sizeItem.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {errors.sizeStock?.[index]?.size && (
+                                        <span className="add-product-error">Este campo es requerido</span>
+                                    )}
+                                </div>
+
+                                <div className="form-group">
+                                    <input
+                                        type="number"
+                                        {...register(`sizeStock[${index}].stock`, { required: true })}
+                                        value={entry.stock || ""}
+                                        onChange={(e) => handleSizeStockChange(index, "stock", e.target.value)}
+                                        className="add-product-input"
+                                        placeholder="Stock"
+                                    />
+
+                                    {errors.sizeStock?.[index]?.stock && (
+                                        <span className="add-product-error">Este campo es requerido</span>
+                                    )}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveSizeStock(index)}
+                                    className="remove-size-button"
+                                >
+                                    Eliminar
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                    <button type="button" onClick={handleAddSizeStock} className="add-size-button">
+                        Agregar Talla
+                    </button>
+                </div>
+
+                {!isEdit && (
+                    <div className="form-group">
+                        <label className="label-name">Imagen principal</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            {...register("main_image", { required: true })}
+                            className="add-product-file"
+                        />
+                        {errors.main_image && <span className="add-product-error">Este campo es requerido</span>}
+                    </div>
+                )}
+
+                {!isEdit && (
+                    <div className="form-group">
+                        <label className="label-name">Imágenes adicionales (opcional)</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            {...register("additional_images")}
+                            className="add-product-file"
+                        />
+                    </div>
+                )}
+            </div>
         </>
     );
 };

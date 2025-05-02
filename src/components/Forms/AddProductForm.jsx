@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import './AddProductForm.css';
 
 const AddProductForm = ({ onClose }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm();
     const [categories, setCategories] = useState([]);
     const [sizes, setSizes] = useState([]);
 
@@ -38,21 +38,36 @@ const AddProductForm = ({ onClose }) => {
     const onSubmit = handleSubmit(async (data) => {
         try {
             const formData = new FormData();
-            for (const key in data) {
-                if (key === "image" && data.image.length > 0) {
-                    formData.append("image", data.image[0]);
-                } else if (key === "sizeStock") {
-                    const sizeStockJson = JSON.stringify(data.sizeStock);
-                    formData.append("sizes_json", sizeStockJson);
-                } else {
-                    formData.append(key, data[key]);
+
+            // Imagen principal
+            if (data.main_image && data.main_image.length > 0) {
+                formData.append("main_image", data.main_image[0]);
+            }
+
+            // Imágenes adicionales
+            if (data.additional_images && data.additional_images.length > 0) {
+                for (let i = 0; i < data.additional_images.length; i++) {
+                    formData.append("additional_images", data.additional_images[i]);
                 }
             }
 
+            // Tallas y stock
+            if (data.sizeStock) {
+                const sizeStockJson = JSON.stringify(data.sizeStock);
+                formData.append("sizes_json", sizeStockJson);
+            }
+
+            // Otros campos
+            for (const key in data) {
+                if (["main_image", "additional_images", "sizeStock"].includes(key)) continue;
+                formData.append(key, data[key]);
+            }
+
+            // (Opcional) Verificar lo que se está enviando
             for (const pair of formData.entries()) {
                 console.log(pair[0], pair[1]);
             }
-        
+
             await addProduct(formData);
 
             Swal.fire({
@@ -79,6 +94,7 @@ const AddProductForm = ({ onClose }) => {
         }
     });
 
+
     return (
         <div className="add-product-modal-overlay">
             <div className="add-product-modal-content">
@@ -90,6 +106,7 @@ const AddProductForm = ({ onClose }) => {
                         categories={categories}
                         isEdit={false}
                         sizes={sizes}
+                        setValue={setValue}
                     />
                     <div className="add-product-actions">
                         <button type="button" onClick={onClose} className="add-product-cancel-button">Cancelar</button>
