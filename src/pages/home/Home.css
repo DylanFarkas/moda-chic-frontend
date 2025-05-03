@@ -27,7 +27,44 @@
     border-radius: 40px;
 }
 
-.buttons button{
+/* .buttons button{
    width: 100px;
    margin: 20px;
-}
+} */
+
+.category-icons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+  }
+  
+  .category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+    transition: transform 0.2s ease;
+  }
+  
+  .category-item img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 8px;
+  }
+  
+  .category-item span {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .category-item:hover {
+    transform: scale(1.05);
+  }
+  
