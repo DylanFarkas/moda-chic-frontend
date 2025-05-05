@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getAllProducts } from "../../api/products.api";
-import { getAllCategories } from "../../api/categories.api"; // Importa las categorías
+import { getAllCategories } from "../../api/categories.api";
 import './ProductCards.css';
-import { useLocation } from "react-router-dom";
 
 const ProductCards = () => {
     const [products, setProducts] = useState([]);
@@ -10,7 +10,8 @@ const ProductCards = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
-
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         async function loadData() {
@@ -37,12 +38,20 @@ const ProductCards = () => {
         loadData();
     }, [location.search]);
 
+    const handleProductClick = (id) => {
+        navigate(`/product/${id}`);
+    };
+
     return (
         <div className="product-cards-container">
             <div className="cards-wrapper">
                 {filteredProducts.map((product) => (
-                    <div key={product.id} className="product-card">
-                        <img src={product.main_image} alt={product.name} className="product-image" />
+                    <div 
+                        key={product.id} 
+                        className="product-card" 
+                        onClick={() => handleProductClick(product.id)}
+                    >
+                        <img src={product.main_image || product.image} alt={product.name} className="product-image" />
                         <div className="product-details">
                             <h2 className="product-name">{product.name}</h2>
                             <p className="product-price">${product.price}</p>

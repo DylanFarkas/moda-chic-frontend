@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Carousel from "../../components/Carousel/Carousel";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/footer";
 import ProductCards from "../../components/ProductCards/ProductCards";
 import "./Home.css";
 
@@ -32,6 +33,7 @@ const Home = () => {
         </div>
         <ProductCards />
       </section>
+      <Footer/>
     </div>
   );
 };

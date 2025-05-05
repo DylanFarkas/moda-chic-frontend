@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
-import { FaShoppingCart, FaUser, FaSearch, FaBars } from "react-icons/fa";
+import { FaShoppingCart, FaUser, FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from "../../context/cartcontext";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showCart, setShowCart] = useState(false); // Nuevo estado para el carrito
   const navigate = useNavigate();
+  const { cartItems, totalPrice, removeFromCart } = useCart();
 
   useEffect(() => {
     const loggedUser = JSON.parse(localStorage.getItem("user"));
@@ -16,7 +19,6 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    // Eliminar datos del usuario y redirigir
     localStorage.removeItem("user");
     localStorage.removeItem("access_token");
     setUser(null);
@@ -31,11 +33,16 @@ const Navbar = () => {
       showConfirmButton: false
     });
 
-    // Redirigir tras un pequeño delay
     setTimeout(() => {
       navigate("/");
     }, 2000);
   };
+
+  const toggleCart = () => {
+    setShowCart(!showCart);
+  };
+
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <header className="navbar">
@@ -52,7 +59,6 @@ const Navbar = () => {
         <a href="#">Tops</a>
         <a href="#">Accesorios</a>
 
-        {/* Íconos móviles */}
         <div className="mobile-icons">
           {user ? (
             <div className="user-info" onClick={() => setShowDropdown(!showDropdown)}>
@@ -67,7 +73,10 @@ const Navbar = () => {
           ) : (
             <FaUser className="icon" onClick={() => navigate('/login')} />
           )}
-          <FaShoppingCart className="icon" />
+          <div className="cart-icon-container" onClick={toggleCart}>
+            <FaShoppingCart className="icon" />
+            {totalItems > 0 && <span className="cart-counter">{totalItems}</span>}
+          </div>
         </div>
       </nav>
 
@@ -91,8 +100,61 @@ const Navbar = () => {
           <FaUser className="icon" onClick={() => navigate('/login')} />
         )}
 
-        <FaShoppingCart className="icon" />
+        <div className="cart-icon-container" onClick={toggleCart}>
+          <FaShoppingCart className="icon" />
+          {totalItems > 0 && <span className="cart-counter">{totalItems}</span>}
+        </div>
       </div>
+
+      {/* Carrito desplegable */}
+      <div className={`cart-dropdown ${showCart ? 'open' : ''}`}>
+        <div className="cart-header">
+          <h3>Tu Carrito ({totalItems})</h3>
+          <button onClick={toggleCart} className="close-cart">
+            <FaTimes />
+          </button>
+        </div>
+        
+        {cartItems.length === 0 ? (
+          <p className="empty-cart">Tu carrito está vacío</p>
+        ) : (
+          <>
+            <div className="cart-items-list">
+              {cartItems.map(item => (
+                <div key={`${item.id}-${item.selectedSize}`} className="cart-item">
+                  <img src={item.image} alt={item.name} className="cart-item-image" />
+                  <div className="cart-item-details">
+                    <h4>{item.name}</h4>
+                    {item.sizeName && <p>Talla: {item.sizeName}</p>}
+                    <p>${item.price.toLocaleString()} x {item.quantity}</p>
+                  </div>
+                  <button 
+                    onClick={() => removeFromCart(item.id, item.selectedSize)}
+                    className="remove-item"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="cart-total">
+              <p>Total: <span>${totalPrice.toLocaleString()}</span></p>
+              <button 
+                className="checkout-button"
+                onClick={() => {
+                  toggleCart();
+                  navigate('/checkout');
+                }}
+              >
+                Finalizar Compra
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Overlay - Cambio importante aquí */}
+      {showCart && <div className="cart-overlay" onClick={toggleCart} />}
     </header>
   );
 };
