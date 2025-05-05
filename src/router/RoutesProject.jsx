@@ -13,9 +13,12 @@ import ResetPassword from "../pages/login/ResetPassword.jsx";
 import PantalonesPage from "../pages/home/PantalonesPage/PantalonesPage.jsx";
 import ProductCards from "../components/ProductCards/ProductCards.jsx";
 import CamisasPage from "../pages/home/CamisasPage/CamisasPage.jsx";
+import ProductDetail from "../pages/Productdetail/productdetail.jsx";
+import { CartProvider } from "../context/cartcontext.jsx";
 
 export default function RoutesProject() {
   return (
+    <CartProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -28,11 +31,13 @@ export default function RoutesProject() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<Products />} />
+        <Route path="/product/:id" element={<ProductDetail />} /> 
         <Route path="/categories" element={<Categories />} />
         <Route path="/users" element={<Users />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/statistics" element={<Statistics />} />
       </Routes>
     </BrowserRouter>
+    </CartProvider>
   );
 }

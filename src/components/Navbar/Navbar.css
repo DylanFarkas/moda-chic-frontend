@@ -249,3 +249,236 @@ body {
         }
     }
 }
+
+
+/* Estilos para el contador del carrito */
+.cart-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-counter {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: #993f6b;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Asegura que el icono del carrito tenga espacio para el contador */
+.nav-actions .cart-icon-container,
+.mobile-icons .cart-icon-container {
+  margin-left: 5px;
+}
+
+/* Añade estos estilos al final de tu archivo CSS */
+
+/* Estilos para el carrito desplegable */
+.cart-dropdown {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+  }
+  
+  .cart-dropdown.open {
+    right: 0;
+  }
+  
+  .cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  .cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    background: white;
+  }
+  
+  .cart-header h3 {
+    margin: 0;
+    color: #993f6b;
+    font-size: 1.2rem;
+  }
+  
+  .close-cart {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s;
+  }
+  
+  .close-cart:hover {
+    color: #993f6b;
+  }
+  
+  .cart-items-list {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  .cart-item {
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f5f5f5;
+    position: relative;
+  }
+  
+  .cart-item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 4px;
+  }
+  
+  .cart-item-details {
+    flex: 1;
+  }
+  
+  .cart-item-details h4 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .cart-item-details p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .quantity-control button {
+    width: 25px;
+    height: 25px;
+    background: #f5f5f5;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .quantity-control button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .quantity-control span {
+    margin: 0 10px;
+    min-width: 20px;
+    text-align: center;
+  }
+  
+  .remove-item {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: #999;
+    padding: 5px;
+  }
+  
+  .empty-cart {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-size: 1rem;
+  }
+  
+  .cart-total {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    position: sticky;
+    bottom: 0;
+    background: white;
+  }
+  
+  .cart-total p {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+  }
+  
+  .cart-total span {
+    color: #993f6b;
+  }
+  
+  .checkout-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #993f6b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  .checkout-button:hover {
+    background-color: #a94f7c;
+  }
+  
+  /* Responsive para el carrito */
+  @media (max-width: 480px) {
+    .cart-dropdown {
+      width: 100%;
+      right: -100%;
+    }
+    
+    .cart-item {
+        flex-direction: column;
+      }
+      
+      .cart-item-image {
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+      }
+    }
