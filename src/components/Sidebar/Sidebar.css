@@ -1,0 +1,192 @@
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background: #120025;
+    color: #f3f3f3;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.brand-title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #993f6b;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.brand-title:hover {
+    color: #d46a9d;
+}
+
+/* Menu items */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin-bottom: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sidebar-menu li {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background-color: #280035;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-size: 15.5px;
+    font-weight: 500;
+}
+
+.sidebar-menu li:hover {
+    background-color: #400050;
+    transform: translateX(5px);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.sidebar-menu li.active {
+    background-color: #400050;
+    transform: translateX(5px);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.sidebar-menu li span {
+    margin-left: 12px;
+}
+
+.sidebar-icons {
+    background-color: rgba(255, 111, 145, 0.1);
+    padding: 6px;
+    border-radius: 8px;
+    font-size: 2rem;
+    color: #ff6f91;
+}
+
+.cuenta-section {
+    margin-top: 40px;
+    border-top: 1px solid #773362;
+    padding-top: 20px;
+    font-size: 14px;
+}
+
+.cuenta-title {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #ffce57;
+    margin-bottom: 6px;
+}
+
+.cuenta-email {
+    color: #e0e0e0;
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
+.logout-button {
+    font-family: 'Segoe UI', sans-serif;
+    background: #993f6b;
+    color: #ffffff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.logout-button:hover {
+    background: rgb(253, 93, 122);
+    color: white;
+    transform: translateX(2px);
+}
+
+.sidebar-menu li span,
+.brand,
+.cuenta-title,
+.cuenta-email,
+.logout-btn {
+  transition: opacity 0.3s ease;
+}
+
+.confirm-logout-admin {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.confirm-logout-admin:hover {
+    background: #ffb4b4;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+.cancel-logout-admin {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.cancel-logout-admin:hover {
+    background: #e2e2e2;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+.confirm-logout-admin-success {
+    transition: all 0.3s ease;
+    font-weight: 700;
+}
+
+.confirm-logout-admin-success:hover {
+    background: #ffe0ed;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 120px;
+        padding: 20px 10px;
+        align-items: center;
+    }
+
+    .brand {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+    }
+
+    .sidebar-menu li {
+        justify-content: center;
+        padding: 12px;
+    }
+
+    .sidebar-menu li span {
+        display: none;
+    }
+
+    .sidebar-icons {
+        font-size: 2.5rem;
+        padding: 8px;
+    }
+
+    .cuenta-section {
+        align-items: center;
+        text-align: center;
+    }
+
+    .cuenta-title,
+    .cuenta-email {
+        display: none;
+    }
+}
