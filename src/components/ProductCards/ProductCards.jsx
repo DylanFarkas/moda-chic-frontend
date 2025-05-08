@@ -6,6 +6,7 @@ import './ProductCards.css';
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { getWishlist, addToWishlist, removeFromWishlist } from "../../api/users.api";
 import { useWishlist } from "../../context/wishlistcontext";
+import CamisaFilters from "../CamisaFilters/CamisaFilters"; // ✅ nuevo
 
 const ProductCards = () => {
     const [products, setProducts] = useState([]);
@@ -16,12 +17,14 @@ const ProductCards = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { wishlistItems, setWishlistItems } = useWishlist();
+    const [activeFilters, setActiveFilters] = useState({}); // ✅ nuevo
 
 
     useEffect(() => {
         async function loadData() {
             const resProducts = await getAllProducts();
             const resCategories = await getAllCategories();
+          
 
             setProducts(resProducts.data);
             setCategories(resCategories.data);
@@ -51,6 +54,30 @@ const ProductCards = () => {
         loadData();
     }, [location.search]);
 
+    const applyFilters = (filters) => {
+        let filtered = [...products];
+
+        if (filters.size) {
+            filtered = filtered.filter((product) =>
+                product.size_stock?.some(s => s.size.id === Number(filters.size))
+            );
+        }
+
+        if (filters.color) {
+            filtered = filtered.filter((product) =>
+                product.colors?.some(c => c.code === filters.color)
+            );
+        }
+
+        if (filters.priceRange) {
+            const [min, max] = filters.priceRange.split("-").map(Number);
+            filtered = filtered.filter((product) => product.price >= min && product.price <= max);
+        }
+
+        setFilteredProducts(filtered);
+        setActiveFilters(filters);
+    };
+
     const toggleWishlist = async (productId) => {
         const existing = wishlistItems.find(item => item.product === productId);
         try {
@@ -78,6 +105,7 @@ const ProductCards = () => {
     return (
         <div className="product-cards-container">
             <div className="cards-wrapper">
+            <CamisaFilters onFilterChange={applyFilters} />
                 {filteredProducts.map((product) => (
                     <div
                         key={product.id}
