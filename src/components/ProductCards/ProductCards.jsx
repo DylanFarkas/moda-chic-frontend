@@ -6,6 +6,7 @@ import './ProductCards.css';
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { getWishlist, addToWishlist, removeFromWishlist } from "../../api/users.api";
 import { useWishlist } from "../../context/wishlistcontext";
+import CamisaFilters from "../CamisaFilters/CamisaFilters"; // ✅ nuevo
 
 const ProductCards = () => {
     const [products, setProducts] = useState([]);
@@ -13,10 +14,11 @@ const ProductCards = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [activeFilters, setActiveFilters] = useState({}); // ✅ nuevo
+
     const navigate = useNavigate();
     const location = useLocation();
     const { wishlistItems, setWishlistItems } = useWishlist();
-
 
     useEffect(() => {
         async function loadData() {
@@ -51,6 +53,30 @@ const ProductCards = () => {
         loadData();
     }, [location.search]);
 
+    const applyFilters = (filters) => {
+        let filtered = [...products];
+
+        if (filters.size) {
+            filtered = filtered.filter((product) =>
+                product.size_stock?.some(s => s.size.id === Number(filters.size))
+            );
+        }
+
+        if (filters.color) {
+            filtered = filtered.filter((product) =>
+                product.colors?.some(c => c.code === filters.color)
+            );
+        }
+
+        if (filters.priceRange) {
+            const [min, max] = filters.priceRange.split("-").map(Number);
+            filtered = filtered.filter((product) => product.price >= min && product.price <= max);
+        }
+
+        setFilteredProducts(filtered);
+        setActiveFilters(filters);
+    };
+
     const toggleWishlist = async (productId) => {
         const existing = wishlistItems.find(item => item.product === productId);
         try {
@@ -70,13 +96,15 @@ const ProductCards = () => {
         return wishlistItems.some(item => item.product === productId);
     };
 
-
     const handleProductClick = (id) => {
         navigate(`/product/${id}`);
     };
 
     return (
         <div className="product-cards-container">
+            {/* ✅ Componente de filtros */}
+            <CamisaFilters onFilterChange={applyFilters} />
+
             <div className="cards-wrapper">
                 {filteredProducts.map((product) => (
                     <div
@@ -84,7 +112,7 @@ const ProductCards = () => {
                         className="product-card"
                     >
                         <div className="wishlist-icon" onClick={(e) => {
-                            e.stopPropagation(); // evita que se dispare el onClick de la card
+                            e.stopPropagation();
                             toggleWishlist(product.id);
                         }}>
                             {isInWishlist(product.id) ? (
