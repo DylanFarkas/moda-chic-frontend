@@ -3,9 +3,9 @@ import { FaShoppingCart, FaUser, FaSearch, FaBars, FaTimes, FaHeart } from "reac
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
 import { useWishlist } from "../../context/wishlistcontext";
-import { useCart } from "../../context/cartcontext";
 import Swal from "sweetalert2";
-import { removeFromWishlist } from "../../api/users.api";
+import { removeFromCart, removeFromWishlist } from "../../api/users.api";
+import { useCart } from "../../context/cartcontext";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,8 +15,10 @@ const Navbar = () => {
   const [showWishlist, setShowWishlist] = useState(false);
   const { wishlistItems, setWishlistItems } = useWishlist();
   const navigate = useNavigate();
-  const { cartItems, totalPrice, removeFromCart } = useCart();
+  const { cartItems = [], totalPrice, setCartItems } = useCart();
+  const cart = cartItems[0];
 
+  console.log(cartItems);
   useEffect(() => {
     const loggedUser = JSON.parse(localStorage.getItem("user"));
     setUser(loggedUser);
@@ -25,7 +27,6 @@ const Navbar = () => {
   useEffect(() => {
     console.log("Wishlist Items:", wishlistItems);
   }, [wishlistItems]);
-
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -51,7 +52,7 @@ const Navbar = () => {
     setShowCart(!showCart);
   };
 
-  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = cartItems[0]?.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
   return (
     <header className="navbar">
@@ -130,7 +131,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Carrito desplegable */}
       <div className={`cart-dropdown ${showCart ? 'open' : ''}`}>
         <div className="cart-header">
           <h3>Tu Carrito ({totalItems})</h3>
@@ -139,40 +139,57 @@ const Navbar = () => {
           </button>
         </div>
 
-        {cartItems.length === 0 ? (
+        {(!cartItems || cartItems.length === 0) ? (
           <p className="empty-cart">Tu carrito está vacío</p>
         ) : (
           <>
-            <div className="cart-items-list">
-              {cartItems.map(item => (
-                <div key={`${item.id}-${item.selectedSize}`} className="cart-item">
-                  <img src={item.image} alt={item.name} className="cart-item-image" />
-                  <div className="cart-item-details">
-                    <h4>{item.name}</h4>
-                    {item.sizeName && <p>Talla: {item.sizeName}</p>}
-                    <p>${item.price.toLocaleString()} x {item.quantity}</p>
+            {cart && cart.items && cart.items.length > 0 ? (
+              <div className="cart-items-list">
+                {cart.items.map(item => (
+                  <div key={`${item.product}-${item.size}`} className="cart-item">
+                    <img src={item.product_image} alt="producto" className="cart-item-image" />
+                    <div className="cart-item-details">
+                      <h4>{item.product_name}</h4>
+                      <p>Talla: {item.size_name}</p>
+                      <p>${item.product_price} x {item.quantity}</p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setCartItems(prev => {
+                          const updated = [...prev];
+                          if (updated[0]?.items) {
+                            updated[0].items = updated[0].items.filter(p => p.id !== item.id);
+                          }
+                          return updated;
+                        });
+                        removeFromCart(item.id);
+                      }}
+                      className="remove-item"
+                    >
+                      ×
+                    </button>
                   </div>
-                  <button
-                    onClick={() => removeFromCart(item.id, item.selectedSize)}
-                    className="remove-item"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-            <div className="cart-total">
-              <p>Total: <span>${totalPrice.toLocaleString()}</span></p>
-              <button
-                className="checkout-button"
-                onClick={() => {
-                  toggleCart();
-                  navigate('/checkout');
-                }}
-              >
-                Finalizar Compra
-              </button>
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="empty-cart">Tu carrito está vacío</p>
+            )}
+
+            {/* Mostrar total y botón solo si hay productos */}
+            {cart.items && cart.items.length > 0 && (
+              <div className="cart-total">
+                <p>Total: <span>${cart.total_price ? cart.total_price.toLocaleString() : 'N/A'}</span></p>
+                <button
+                  className="checkout-button"
+                  onClick={() => {
+                    toggleCart();
+                    navigate('/checkout');
+                  }}
+                >
+                  Finalizar Compra
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>
@@ -193,12 +210,12 @@ const Navbar = () => {
             <div className="cart-items-list">
               {wishlistItems.map(item => (
                 <div key={item.id} className="cart-item">
-                  <img src={item.product_image} alt={item.product_name} className="cart-item-image"/>
+                  <img src={item.product_image} alt={item.product_name} className="cart-item-image" />
                   <div className="cart-item-details">
                     <h4>{item.product_name}</h4>
                     <p>${item.product_price}</p>
                   </div>
-                   <button
+                  <button
                     onClick={() => {
                       removeFromWishlist(item.id).then(() => {
                         setWishlistItems(prev => prev.filter(p => p.id !== item.id));
@@ -207,8 +224,7 @@ const Navbar = () => {
                     className="remove-item"
                   >
                     ×
-                  </button> 
-
+                  </button>
                 </div>
               ))}
             </div>

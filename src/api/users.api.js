@@ -55,3 +55,33 @@ export const addToWishlist = (productId) => {
 export const removeFromWishlist = (wishlistItemId) => {
   return usersApi.delete(`wishlist/${wishlistItemId}/`, getAuthHeaders());
 };
+
+// Obtener carrito del usuario
+export const getCart = () => {
+  return usersApi.get('cart/', getAuthHeaders());
+};
+
+// Agregar producto al carrito
+export const addToCart = (productId, quantity, sizeId) => {
+  return usersApi.post('cart-items/', {
+    product: productId,
+    quantity: quantity,
+    size: sizeId
+  }, getAuthHeaders());
+};
+
+
+// Actualizar cantidad de producto en el carrito
+export const updateCartItemQuantity = (cartItemId, quantity) => {
+  return usersApi.patch(
+    `cart-items/${cartItemId}/`,
+    { quantity },
+    getAuthHeaders()
+  );
+};
+
+// Eliminar producto del carrito
+
+export const removeFromCart = (productlistItenId) => {
+  return usersApi.delete(`cart-items/${productlistItenId}/`, getAuthHeaders());
+};
