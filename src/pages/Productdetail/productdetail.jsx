@@ -38,12 +38,27 @@ const ProductDetail = () => {
   const decrement = () => quantity > 1 && setQuantity(prev => prev - 1);
 
   const handleAddToCart = async () => {
+    const token = localStorage.getItem('access_token');
+    const isLoggedIn = !!token;
+
+    if (!isLoggedIn) {
+      Swal.fire({
+        icon: "warning",
+        title: "Inicia sesión",
+        text: "Debes iniciar sesión para agregar productos al carrito",
+        confirmButtonColor: "#993f6b",
+        customClass: {
+          confirmButton: 'ok-error-add-product',
+        }
+      });
+      return;
+    }
+
     if (!product || (product.size_stock?.length > 0 && !selectedSize)) return;
 
     try {
       await addToCart(product.id, quantity, selectedSize);
 
-      // Mostrar notificación
       Swal.fire({
         icon: "success",
         title: "Producto agregado",
@@ -53,7 +68,6 @@ const ProductDetail = () => {
         showConfirmButton: false
       });
 
-      // Recargar el carrito
       const updatedCart = await getCart();
       setCartItems(updatedCart.data);
     } catch (error) {
@@ -69,6 +83,7 @@ const ProductDetail = () => {
       });
     }
   };
+
 
   useEffect(() => {
     console.log("Cart items updated:", cartItems);
@@ -117,7 +132,7 @@ const ProductDetail = () => {
 
         <div className="info-section">
           <h1 className="product-title">{product.name}</h1>
-          <p className="product-price">${product.price.toLocaleString()}</p>
+          <p className="product-detail-price">${product.price.toLocaleString()}</p>
 
           <div className="product-options">
             {product.size_stock?.length > 0 && (

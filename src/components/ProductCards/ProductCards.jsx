@@ -6,8 +6,9 @@ import './ProductCards.css';
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { getWishlist, addToWishlist, removeFromWishlist } from "../../api/users.api";
 import { useWishlist } from "../../context/wishlistcontext";
+import Swal from "sweetalert2";
 
-const ProductCards = () => {
+const ProductCards = ({ fixedCategory, filters }) => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -22,10 +23,11 @@ const ProductCards = () => {
         async function loadData() {
             const resProducts = await getAllProducts();
             const resCategories = await getAllCategories();
-
             setProducts(resProducts.data);
             setCategories(resCategories.data);
+            console.log("Respuestas de productos:", resProducts.data);
 
+    
             // Wishlist
             try {
                 const resWishlist = await getWishlist();
@@ -33,25 +35,60 @@ const ProductCards = () => {
             } catch (error) {
                 console.error("No autenticado o error al obtener wishlist", error);
             }
-
-            const params = new URLSearchParams(location.search);
-            const categoryParam = params.get("categoria");
-
+    
+            let filtered = resProducts.data;
+    
+            const categoryParam = fixedCategory ||
+                new URLSearchParams(location.search).get("categoria");
+    
             if (categoryParam) {
-                const filtered = resProducts.data.filter(
-                    product => product.category_name?.name.toLowerCase() === categoryParam.toLowerCase()
+                filtered = filtered.filter(product =>
+                    product.category_name?.name.toLowerCase() === categoryParam.toLowerCase()
                 );
-                setFilteredProducts(filtered);
                 setSelectedCategory(categoryParam);
-            } else {
-                setFilteredProducts(resProducts.data);
             }
+    
+            // Aplica filtros de tallas y precios
+            if (filters) {
+                console.log("filters.sizes:", filters.sizes);  // Agregar este log para ver las tallas seleccionadas
+    
+                if (filters.sizes && filters.sizes.length > 0) {
+                    filtered = filtered.filter(product =>
+                        product.size_stock?.some(sizeStock =>
+                            filters.sizes.includes(sizeStock.size.id)
+                        )
+                    );
+                }
+                
+    
+                const min = parseFloat(filters.priceRange?.min);
+                const max = parseFloat(filters.priceRange?.max);
+    
+                if (!isNaN(min)) filtered = filtered.filter(p => p.price >= min);
+                if (!isNaN(max)) filtered = filtered.filter(p => p.price <= max);
+            }
+    
+            setFilteredProducts(filtered);
         }
-
+    
         loadData();
-    }, [location.search]);
+    }, [location.search, fixedCategory, filters]);
+    
 
     const toggleWishlist = async (productId) => {
+        if (!localStorage.getItem("access_token")) {
+            Swal.fire({
+                icon: "warning",
+                title: "Inicia sesión",
+                text: "Debes iniciar sesión para usar la lista de deseos",
+                confirmButtonColor: "#993f6b",
+                customClass: {
+                    confirmButton: 'ok-error-add-product',
+                }
+            });
+            return;
+        }
+
         const existing = wishlistItems.find(item => item.product === productId);
         try {
             if (existing) {

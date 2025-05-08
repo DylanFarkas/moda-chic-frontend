@@ -24,7 +24,7 @@
 .section-title::after {
   content: '';
   display: block;
-  width: 180px;
+  width: 380px;
   height: 4px;
   background: #bd5285;
   margin: 10px auto 0;
