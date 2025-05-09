@@ -20,7 +20,7 @@ const PantalonesPage = () => {
           <div className="filters-container">
             <ProductFilters onFilterChange={setFilters} />
           </div>
-          <div className="products-container">
+          <div className="products-page-container">
             <ProductCards fixedCategory="pantalones" filters={filters} />
           </div>
         </div>
