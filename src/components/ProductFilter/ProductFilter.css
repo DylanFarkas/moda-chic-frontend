@@ -1,0 +1,111 @@
+.product-filters {
+    background-color: #fff;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    font-family: 'Inter', sans-serif;
+    color: #333;
+    max-width: 250px;
+    margin-right: 90px;
+    width: 90%;
+}
+
+.filter-group {
+    margin-bottom: 28px;
+}
+
+.filter-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #111;
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 6px;
+}
+
+.size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.size-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+   
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.size-option:hover {
+    background-color: #e0e0e0;
+}
+
+.size-option input {
+    accent-color: #e91e63;
+}
+
+.price-range {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.price-slider {
+    width: 100%;
+    appearance: none;
+    height: 6px;
+    background: linear-gradient(to right, #f590c1, #993f6b);
+    border-radius: 6px;
+    outline: none;
+    transition: background 0.3s ease;
+}
+
+.price-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background-color: #e91e63;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.price-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.price-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+    text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+    .product-filters {
+      max-width: 100%;
+      margin: 0 0 20px 0;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+  
+    .filter-title {
+      font-size: 16px;
+    }
+  
+    .size-option {
+      font-size: 14px;
+    }
+  
+    .price-label {
+      font-size: 13px;
+    }
+  }
+  
