@@ -1,16 +1,10 @@
-.pantalones-p-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.products-p-section {
+.products-category-section {
     padding: 20px;
     flex-grow: 1;
     width: 100%;
 }
 
-.section-p-title {
+.section-category-title {
     margin-bottom: 70px;
     margin-top: 10px;
     text-align: center;
@@ -19,7 +13,7 @@
     color: #333;
 }
 
-.section-p-title::after {
+.section-category-title::after {
     content: '';
     display: block;
     width: 240px;
@@ -29,7 +23,7 @@
     border-radius: 40px;
 }
 
-.products-p-content {
+.products-category-content {
     display: flex;
     gap: 20px;
     width: 100%;
@@ -41,7 +35,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 250px; /* Fixed width for filters */
+    width: 250px;
+    /* Fixed width for filters */
 }
 
 .products-page-container {
@@ -53,7 +48,7 @@
 }
 
 @media screen and (max-width: 768px) {
-    .products-p-content {
+    .products-category-content {
         flex-direction: column;
         max-width: 100%;
         padding: 0 15px;
@@ -64,7 +59,7 @@
         margin-bottom: 20px;
     }
 
-    .products-container {
+    .category-container {
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     }
 

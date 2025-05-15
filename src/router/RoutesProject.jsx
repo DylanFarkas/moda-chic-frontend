@@ -10,12 +10,10 @@ import Categories from "../pages/admindashboard/categories/Categories.jsx";
 import Register from "../pages/register/Register.jsx";
 import ForgotPassword from "../pages/login/ForgotPassword.jsx";
 import ResetPassword from "../pages/login/ResetPassword.jsx";
-import PantalonesPage from "../pages/home/PantalonesPage/PantalonesPage.jsx";
-import ProductCards from "../components/ProductCards/ProductCards.jsx";
-import CamisasPage from "../pages/home/CamisasPage/CamisasPage.jsx";
 import ProductDetail from "../pages/Productdetail/productdetail.jsx";
 import { CartProvider } from "../context/cartcontext.jsx";
 import { WishlistProvider } from "../context/wishlistcontext.jsx";
+import CategoryPage from "../components/CategoryPage/CategoryPage.jsx";
 
 export default function RoutesProject() {
   return (
@@ -24,8 +22,7 @@ export default function RoutesProject() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/pantalon-page" element={<PantalonesPage />} />
-            <Route path="/camisa-page" element={<CamisasPage />} />
+            <Route path="/categoria/:categoryName" element={<CategoryPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:uidb64/:token" element={<ResetPassword />} />
