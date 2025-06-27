@@ -85,3 +85,7 @@ export const updateCartItemQuantity = (cartItemId, quantity) => {
 export const removeFromCart = (productlistItenId) => {
   return usersApi.delete(`cart-items/${productlistItenId}/`, getAuthHeaders());
 };
+
+export const createOrder = (orderData) => {
+  return usersApi.post('orders/', orderData, getAuthHeaders());
+};
