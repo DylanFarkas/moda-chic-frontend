@@ -11,22 +11,17 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showCart, setShowCart] = useState(false); // Nuevo estado para el carrito
+  const [showCart, setShowCart] = useState(false);
   const [showWishlist, setShowWishlist] = useState(false);
   const { wishlistItems, setWishlistItems } = useWishlist();
   const navigate = useNavigate();
   const { cartItems = [], totalPrice, setCartItems } = useCart();
   const cart = cartItems[0];
 
-  console.log(cartItems);
   useEffect(() => {
     const loggedUser = JSON.parse(localStorage.getItem("user"));
     setUser(loggedUser);
   }, []);
-
-  useEffect(() => {
-    console.log("Wishlist Items:", wishlistItems);
-  }, [wishlistItems]);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -56,20 +51,30 @@ const Navbar = () => {
 
   return (
     <header className="navbar">
-      <div className="logo" onClick={() => navigate("/")}>Moda Chic</div>
+      <div className="logo-container">
+        <div className="logo" onClick={() => navigate("/")}>MODA CHIC</div>
+        <div className="logo-subtitle">ELEGANCIA CONTEMPORÁNEA</div>
+      </div>
 
       <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
-        <FaBars />
+        {menuOpen ? <FaTimes /> : <FaBars />}
       </div>
 
       <nav className={`nav-categories ${menuOpen ? 'active' : ''}`}>
-        <a href="/">Inicio</a>
-        <a href="#">Ropa</a>
-        <a href="#">Vestidos</a>
-        <a href="#">Tops</a>
-        <a href="#">Accesorios</a>
+        <div className="nav-links">
+          <a href="/">INICIO</a>
+          <a href="#">ROPA</a>
+          <a href="#">VESTIDOS</a>
+          <a href="#">TOPS</a>
+          <a href="#">ACCESORIOS</a>
+        </div>
 
         <div className="mobile-icons">
+          <div className="search-box mobile-search">
+            <input type="text" placeholder="Buscar..." />
+            <button><FaSearch /></button>
+          </div>
+
           {user ? (
             <div className="user-info" onClick={() => setShowDropdown(!showDropdown)}>
               <FaUser className="icon" />
@@ -100,7 +105,7 @@ const Navbar = () => {
 
       <div className="nav-actions">
         <div className="search-box">
-          <input type="text" placeholder="¿Qué estás buscando?" />
+          <input type="text" placeholder="Buscar..." />
           <button><FaSearch /></button>
         </div>
 

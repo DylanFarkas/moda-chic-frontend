@@ -3,10 +3,12 @@ import { getProduct } from "../../api/products.api";
 import { useParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
-import "./productdetail.css";
+import { FaBox, FaCreditCard  } from "react-icons/fa";
+import { TfiReload } from "react-icons/tfi";
 import { addToCart, getCart } from '../../api/users.api';
 import { useCart } from '../../context/cartcontext';
 import Swal from "sweetalert2";
+import "./productdetail.css";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -194,9 +196,9 @@ const ProductDetail = () => {
           </button>
 
           <ul className="product-extra-info">
-            <li>📦 Envío gratis a partir de $100.000</li>
-            <li>💳 Pago en línea, pago seguro</li>
-            <li>🔁 Devoluciones fáciles</li>
+            <li><FaBox /> Envío gratis a partir de $100.000</li>
+            <li><FaCreditCard /> Pago en línea, pago seguro</li>
+            <li><TfiReload /> Devoluciones fáciles</li>
           </ul>
         </div>
       </div>

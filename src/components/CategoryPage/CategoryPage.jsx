@@ -5,6 +5,7 @@ import Navbar from "../Navbar/Navbar";
 import ProductFilters from "../ProductFilter/ProductFilter";
 import ProductCards from "../ProductCards/ProductCards";
 import "./CategoryPage.css";
+import Footer from "../Footer/footer";
 
 const CategoryPage = () => {
   const { categoryName } = useParams(); // <- nombre de la categoría desde la URL
@@ -20,14 +21,13 @@ const CategoryPage = () => {
       <section className="products-category-section">
         <h2 className="section-category-title">{categoryName}</h2>
         <div className="products-category-content">
-          <div className="filters-container">
-            <ProductFilters onFilterChange={setFilters} />
-          </div>
+          <ProductFilters onFilterChange={setFilters} />
           <div className="products-page-container">
             <ProductCards fixedCategory={categoryName} filters={filters} />
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
