@@ -1,3 +1,4 @@
+import OrdersTable from "../../../components/OrdersTable/OrdersTable";
 import Sidebar from "../../../components/Sidebar/Sidebar";
 import './Orders.css';
 
@@ -6,7 +7,8 @@ const Orders = () => {
         <div className="orders-container">
             <Sidebar />
            <div className="orders-content">
-                <h1>Pedidos</h1>
+                <h1 className="orders-title"> Pedidos </h1>
+                <OrdersTable />
            </div>
         </div>
 

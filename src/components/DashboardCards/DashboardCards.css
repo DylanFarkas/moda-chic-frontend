@@ -138,10 +138,6 @@ html {
     transition: background 0.3s;
 }
 
-.recent-item:hover {
-    background: #e2e2e2;
-}
-
 .recent-name {
     font-weight: bold;
     color: #333;
@@ -152,6 +148,72 @@ html {
     font-size: 0.85rem;
     color: #777;
 }
+
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.recent-item {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-color, #ff69b4); 
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.recent-name {
+  font-weight: bold;
+}
+
+.recent-responsible {
+  color: #666;
+}
+
+.recent-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.recent-status {
+  margin-top: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-paid {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-shipped {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.status-delivered {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
 
 /* Responsive design */
 @media (max-width: 1024px) {
