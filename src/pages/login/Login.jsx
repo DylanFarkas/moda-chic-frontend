@@ -40,6 +40,7 @@ const Login = () => {
         navigate("/admin");
       } else {
         navigate("/");
+        window.location.reload();
       }
 
     } catch (error) {

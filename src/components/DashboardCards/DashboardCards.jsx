@@ -116,7 +116,7 @@ const DashboardCards = () => {
       <div className="dashboard-card recent-card">
         <div className="card-header">
           <FaHistory className="card-icon" />
-          <h3>Últimas Compras</h3>
+          <h3>Últimos Pedidos</h3>
         </div>
         <div className="recent-list">
           {recentOrders.length === 0 ? (

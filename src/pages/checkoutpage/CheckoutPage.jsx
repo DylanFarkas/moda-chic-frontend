@@ -3,7 +3,7 @@ import './CheckoutPage.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 import { useCart } from "../../context/cartcontext";
-import { createOrder } from "../../api/users.api";
+import { createOrder, removeFromCart } from "../../api/users.api";
 import { FiUser, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import Swal from "sweetalert2";
 
@@ -48,6 +48,11 @@ const CheckoutPage = () => {
       };
 
       await createOrder(orderPayload);
+
+      await Promise.all(
+        cart.items.map(item => removeFromCart(item.id))
+      );
+
       setCartItems([]);
 
       await Swal.fire({
@@ -91,6 +96,7 @@ const CheckoutPage = () => {
       setLoading(false);
     }
   };
+
 
   return (
     <>

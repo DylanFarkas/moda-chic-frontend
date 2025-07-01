@@ -383,3 +383,44 @@
     color: #993f6b;
   }
 }
+
+.filters-container {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.filter-input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  min-width: 180px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.filter-input:focus {
+  border-color: #993f6b;
+  box-shadow: 0 0 5px rgba(153, 63, 107, 0.3);
+}
+
+.clear-filters-button {
+  background-color: #6f4559;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.clear-filters-button:hover {
+  background-color: #ffe0ed;
+  color: #333;
+  transform: translateY(-2px);
+}
