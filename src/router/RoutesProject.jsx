@@ -15,6 +15,7 @@ import { CartProvider } from "../context/cartcontext.jsx";
 import { WishlistProvider } from "../context/wishlistcontext.jsx";
 import CategoryPage from "../components/CategoryPage/CategoryPage.jsx";
 import Checkout from "../pages/checkoutpage/CheckoutPage.jsx"; 
+import Reports from "../pages/admindashboard/reports/Reports.jsx";
 
 export default function RoutesProject() {
   return (
@@ -35,6 +36,7 @@ export default function RoutesProject() {
             <Route path="/categories" element={<Categories />} />
             <Route path="/users" element={<Users />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/reports" element={<Reports />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/statistics" element={<Statistics />} />
           </Routes>

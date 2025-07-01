@@ -10,6 +10,7 @@ import {
   FaCog,
   FaUser,
 } from "react-icons/fa";
+import { HiDocumentText } from "react-icons/hi";
 import { BiSolidCategory } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -86,8 +87,11 @@ const Sidebar = () => {
           <li className={location.pathname === "/orders" ? "active" : ""} onClick={() => navigate("/orders")}>
             <FaShoppingCart className="sidebar-icons" /> <span>Pedidos</span>
           </li>
-          <li className={location.pathname === "/statistics" ? "active" : ""} onClick={() => navigate("/statistics")}>
+          {/* <li className={location.pathname === "/statistics" ? "active" : ""} onClick={() => navigate("/statistics")}>
             <FaChartBar className="sidebar-icons" /> <span>Estadísticas</span>
+          </li>  */}
+          <li className={location.pathname === "/reports" ? "active" : ""} onClick={() => navigate("/reports")}>
+          <HiDocumentText className="sidebar-icons"/>  <span>Reportes</span>
           </li>
           <li className={location.pathname === "/users" ? "active" : ""} onClick={() => navigate("/users")}>
             <FaUsers className="sidebar-icons" /> <span>Usuarios</span>
