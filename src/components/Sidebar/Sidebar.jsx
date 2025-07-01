@@ -83,14 +83,14 @@ const Sidebar = () => {
           <li className={location.pathname === "/categories" ? "active" : ""} onClick={() => navigate("/categories")}>
             <BiSolidCategory className="sidebar-icons" /> <span>Categorías</span>
           </li>
-          <li className={location.pathname === "/users" ? "active" : ""} onClick={() => navigate("/users")}>
-            <FaUsers className="sidebar-icons" /> <span>Usuarios</span>
-          </li>
           <li className={location.pathname === "/orders" ? "active" : ""} onClick={() => navigate("/orders")}>
             <FaShoppingCart className="sidebar-icons" /> <span>Pedidos</span>
           </li>
           <li className={location.pathname === "/statistics" ? "active" : ""} onClick={() => navigate("/statistics")}>
             <FaChartBar className="sidebar-icons" /> <span>Estadísticas</span>
+          </li>
+          <li className={location.pathname === "/users" ? "active" : ""} onClick={() => navigate("/users")}>
+            <FaUsers className="sidebar-icons" /> <span>Usuarios</span>
           </li>
           <li>
             <FaCog className="sidebar-icons" /> <span>Configuración</span>
