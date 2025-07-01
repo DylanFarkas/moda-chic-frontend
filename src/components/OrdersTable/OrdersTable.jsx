@@ -11,6 +11,10 @@ const OrdersTable = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // Paginación
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
+
     useEffect(() => {
         async function loadOrders() {
             const res = await getAllOrders();
@@ -22,6 +26,7 @@ const OrdersTable = () => {
 
     useEffect(() => {
         applyFilters();
+        setCurrentPage(1);
     }, [orders, selectedStatusFilter, searchText, selectedDate]);
 
     const handleStatusChange = async (orderId, newStatus) => {
@@ -71,10 +76,28 @@ const OrdersTable = () => {
         setIsModalOpen(false);
     };
 
+    const clearFilters = () => {
+        setSelectedStatusFilter("all");
+        setSearchText("");
+        setSelectedDate("");
+    };
+
+    // Paginación
+    const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
+    const paginatedOrders = filteredOrders.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const goToPage = (page) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+        }
+    };
+
     return (
         <div className="orders-content">
-            <div className="filter-bar">
-                <label>Estado:</label>
+            <div className="filters-container">
                 <select
                     value={selectedStatusFilter}
                     onChange={(e) => setSelectedStatusFilter(e.target.value)}
@@ -88,7 +111,6 @@ const OrdersTable = () => {
                     <option value="cancelled">Cancelado</option>
                 </select>
 
-                <label>Buscar:</label>
                 <input
                     type="text"
                     placeholder="Nombre, email, dirección..."
@@ -97,13 +119,32 @@ const OrdersTable = () => {
                     className="order-filter-input"
                 />
 
-                <label>Fecha:</label>
                 <input
                     type="date"
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
                     className="order-filter-input"
                 />
+                <button onClick={clearFilters} className="clear-filters-button">
+                    Limpiar filtros
+                </button>
+            </div>
+
+            {/* Selector de cantidad por página */}
+            <div className="pagination-settings">
+                <label>Órdenes por página:</label>
+                <select
+                    value={itemsPerPage}
+                    onChange={(e) => {
+                        setItemsPerPage(Number(e.target.value));
+                        setCurrentPage(1);
+                    }}
+                    className="items-per-page-select"
+                >
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                </select>
             </div>
 
             <div className="table-wrapper">
@@ -121,7 +162,7 @@ const OrdersTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredOrders.map((order) => (
+                        {paginatedOrders.map((order) => (
                             <tr key={order.id}>
                                 <td>{order.id}</td>
                                 <td>{order.nombre}</td>
@@ -136,7 +177,7 @@ const OrdersTable = () => {
                                 </td>
                                 <td>
                                     <select
-                                        className="order-status-select"
+                                        className={`order-status-select ${order.status}`}
                                         value={order.status}
                                         onChange={(e) => handleStatusChange(order.id, e.target.value)}
                                     >
@@ -152,6 +193,7 @@ const OrdersTable = () => {
                     </tbody>
                 </table>
 
+                {/* Modal */}
                 {isModalOpen && selectedOrder && (
                     <div className="modal-overlay">
                         <div className="modal-content view-modal">
@@ -167,6 +209,26 @@ const OrdersTable = () => {
                         </div>
                     </div>
                 )}
+            </div>
+            {/* Controles de paginación */}
+            <div className="pagination">
+                <button
+                    onClick={() => goToPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="pagination-button"
+                >
+                    ⬅
+                </button>
+                <span className="pagination-info">
+                    Página {currentPage} de {totalPages}
+                </span>
+                <button
+                    onClick={() => goToPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="pagination-button"
+                >
+                    ➡
+                </button>
             </div>
         </div>
     );
