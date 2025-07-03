@@ -203,3 +203,132 @@
     padding-top: 20px;
   }
 }
+
+.star-rating svg {
+  width: 20px;
+  height: 20px;
+}
+
+
+.review-section {
+  margin-top: 40px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.review-section h3 {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+.review-form textarea {
+  resize: vertical;
+}
+
+.rating-input {
+  display: flex;
+  gap: 6px;
+}
+
+.reviews-list {
+  margin-top: 40px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.review-item {
+  margin-bottom: 20px;
+}
+
+.rating-display span {
+  font-size: 20px;
+}
+
+.reviews-list {
+  margin-top: 40px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background-color: #f7f7f7;
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.accordion-header:hover {
+  background-color: #f0f0f0;
+}
+
+.accordion-icon {
+  font-size: 18px;
+  color: #333;
+}
+
+.accordion-content {
+  margin-top: 16px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.review-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.review-meta {
+  font-size: 12px;
+  color: #777;
+}
+
+.rating-display span {
+  font-size: 20px;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.page-button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.page-button:hover {
+  background-color: #f5f5f5;
+}
+
+.page-button.active {
+  background-color: #303030;
+  color: white;
+  border-color: #303030;
+}
