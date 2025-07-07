@@ -90,3 +90,34 @@
 .product-card {
     position: relative;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.page-btn:hover {
+  background-color: #f3f3f3;
+  transform: scale(1.05);
+}
+
+.page-btn.active {
+  background-color: var(--accent-color, #993f6b);
+  color: #fff;
+  font-weight: bold;
+  border-color: var(--accent-color, #993f6b);
+}

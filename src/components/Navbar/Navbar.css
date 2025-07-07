@@ -192,7 +192,7 @@ body {
 .dropdown {
   position: absolute;
   top: 40px;
-  right: 0;
+  right: -80px;
   background-color: white;
   border: 1px solid var(--border-color);
   border-radius: 4px;
@@ -223,7 +223,7 @@ body {
 }
 
 .dropdown button:hover {
-  color: var(--primary-color);
+  color: #7c7c7c;
 }
 
 /* Íconos solo visibles en mobile */
@@ -470,7 +470,7 @@ body {
     display: flex;
     margin-left: 10px;
   }
-
+  
   /* Ocultar los íconos originales en mobile */
   .nav-actions {
     display: none !important;

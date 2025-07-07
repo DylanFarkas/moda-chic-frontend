@@ -49,6 +49,8 @@
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
+  overflow-y: auto;
+  max-height: 50vh;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   background-color: white;
@@ -328,6 +330,10 @@
   .edit-button,
   .delete-button {
     font-size: 1rem;
+  }
+
+  .table-wrapper {
+    max-height: 60vh; 
   }
 }
 

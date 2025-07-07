@@ -18,6 +18,19 @@ const ProductCards = ({ fixedCategory, filters }) => {
     const location = useLocation();
     const { wishlistItems, setWishlistItems } = useWishlist();
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 8;
+
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+    const paginatedProducts = filteredProducts.slice(
+        (currentPage - 1) * productsPerPage,
+        currentPage * productsPerPage
+    );
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        window.scrollTo({ top: 500, behavior: 'smooth' });
+    };
 
     useEffect(() => {
         async function loadData() {
@@ -25,33 +38,27 @@ const ProductCards = ({ fixedCategory, filters }) => {
             const resCategories = await getAllCategories();
             setProducts(resProducts.data);
             setCategories(resCategories.data);
-            console.log("Respuestas de productos:", resProducts.data);
 
-    
-            // Wishlist
             try {
                 const resWishlist = await getWishlist();
                 setWishlistItems(resWishlist.data);
             } catch (error) {
                 console.error("No autenticado o error al obtener wishlist", error);
             }
-    
+
             let filtered = resProducts.data;
-    
+
             const categoryParam = fixedCategory ||
                 new URLSearchParams(location.search).get("categoria");
-    
+
             if (categoryParam) {
                 filtered = filtered.filter(product =>
                     product.category_name?.name.toLowerCase() === categoryParam.toLowerCase()
                 );
                 setSelectedCategory(categoryParam);
             }
-    
-            // Aplica filtros de tallas y precios
+
             if (filters) {
-                console.log("filters.sizes:", filters.sizes);  // Agregar este log para ver las tallas seleccionadas
-    
                 if (filters.sizes && filters.sizes.length > 0) {
                     filtered = filtered.filter(product =>
                         product.size_stock?.some(sizeStock =>
@@ -59,21 +66,20 @@ const ProductCards = ({ fixedCategory, filters }) => {
                         )
                     );
                 }
-                
-    
+
                 const min = parseFloat(filters.priceRange?.min);
                 const max = parseFloat(filters.priceRange?.max);
-    
+
                 if (!isNaN(min)) filtered = filtered.filter(p => p.price >= min);
                 if (!isNaN(max)) filtered = filtered.filter(p => p.price <= max);
             }
-    
+
             setFilteredProducts(filtered);
+            setCurrentPage(1);
         }
-    
+
         loadData();
     }, [location.search, fixedCategory, filters]);
-    
 
     const toggleWishlist = async (productId) => {
         if (!localStorage.getItem("access_token")) {
@@ -107,7 +113,6 @@ const ProductCards = ({ fixedCategory, filters }) => {
         return wishlistItems.some(item => item.product === productId);
     };
 
-
     const handleProductClick = (id) => {
         navigate(`/product/${id}`);
     };
@@ -115,15 +120,15 @@ const ProductCards = ({ fixedCategory, filters }) => {
     return (
         <div className="product-cards-container">
             <div className="cards-wrapper">
-                {filteredProducts.map((product) => (
-                    <div
-                        key={product.id}
-                        className="product-card"
-                    >
-                        <div className="wishlist-icon" onClick={(e) => {
-                            e.stopPropagation(); // evita que se dispare el onClick de la card
-                            toggleWishlist(product.id);
-                        }}>
+                {paginatedProducts.map((product) => (
+                    <div key={product.id} className="product-card">
+                        <div
+                            className="wishlist-icon"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                toggleWishlist(product.id);
+                            }}
+                        >
                             {isInWishlist(product.id) ? (
                                 <FaHeart color="red" />
                             ) : (
@@ -131,7 +136,11 @@ const ProductCards = ({ fixedCategory, filters }) => {
                             )}
                         </div>
                         <div onClick={() => handleProductClick(product.id)}>
-                            <img src={product.main_image || product.image} alt={product.name} className="product-image" />
+                            <img
+                                src={product.main_image || product.image}
+                                alt={product.name}
+                                className="product-image"
+                            />
                             <div className="product-details">
                                 <h2 className="product-name">{product.name}</h2>
                                 <p className="product-price">${product.price}</p>
@@ -140,6 +149,20 @@ const ProductCards = ({ fixedCategory, filters }) => {
                     </div>
                 ))}
             </div>
+
+            {totalPages > 1 && (
+                <div className="pagination">
+                    {Array.from({ length: totalPages }, (_, i) => (
+                        <button
+                            key={i}
+                            className={`page-btn ${currentPage === i + 1 ? "active" : ""}`}
+                            onClick={() => handlePageChange(i + 1)}
+                        >
+                            {i + 1}
+                        </button>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

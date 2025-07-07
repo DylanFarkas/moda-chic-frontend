@@ -6,6 +6,7 @@ import { useCart } from "../../context/cartcontext";
 import { createOrder, removeFromCart } from "../../api/users.api";
 import { FiUser, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import Swal from "sweetalert2";
+import DepartamentCitySelect from '../../components/DepartmentCitySelect/DepartmentCitySelect';
 
 const CheckoutPage = () => {
   const { cartItems = [], setCartItems } = useCart();
@@ -16,6 +17,8 @@ const CheckoutPage = () => {
     email: '',
     telefono: '',
     direccion: '',
+    departamento: '',
+    ciudad: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -25,7 +28,7 @@ const CheckoutPage = () => {
   };
 
   const handleOrderSubmit = async () => {
-    if (!formData.nombre || !formData.email || !formData.telefono || !formData.direccion) {
+    if (!formData.nombre || !formData.email || !formData.telefono || !formData.direccion || !formData.departamento || !formData.ciudad) {
       Swal.fire({
         icon: 'warning',
         title: 'Campos incompletos',
@@ -47,6 +50,8 @@ const CheckoutPage = () => {
         }))
       };
 
+      console.log("Datos enviados al backend:", orderPayload);
+
       await createOrder(orderPayload);
 
       await Promise.all(
@@ -54,6 +59,15 @@ const CheckoutPage = () => {
       );
 
       setCartItems([]);
+
+      setFormData({
+        nombre: '',
+        email: '',
+        telefono: '',
+        direccion: '',
+        departamento: '',
+        ciudad: '',
+      });
 
       await Swal.fire({
         icon: 'success',
@@ -71,13 +85,15 @@ const CheckoutPage = () => {
         '*Nombre:* ' + formData.nombre + '\n' +
         '*Email:* ' + formData.email + '\n' +
         '*Teléfono:* ' + formData.telefono + '\n' +
+        '*Departamento:* ' + formData.departamento + '\n' +
+        '*Ciudad / Municipio:* ' + formData.ciudad + '\n' +
         '*Dirección:* ' + formData.direccion + '\n\n' +
         '*Productos:*\n' +
         cart.items.map(item =>
           `• ${item.product_name} (Talla: ${item.size_name}) x${item.quantity} - $${item.product_price?.toLocaleString() || 0}`
         ).join('\n') +
-        '\n\n💵 *Total:* $' + total.toLocaleString() +
-        '\n\n✅ Gracias.';
+        '\n\n *Total:* $' + total.toLocaleString() +
+        '\n\n Gracias.';
 
       const mensajeCodificado = encodeURIComponent(mensaje);
       const numeroTienda = "573128601430";
@@ -152,6 +168,10 @@ const CheckoutPage = () => {
                 onChange={handleInputChange}
               />
             </div>
+
+            <DepartamentCitySelect
+              onChange={(values) => setFormData((prev) => ({ ...prev, ...values }))}
+            />
 
             <button onClick={handleOrderSubmit} disabled={loading}>
               {loading ? "Procesando pedido..." : "Confirmar Pedido"}
