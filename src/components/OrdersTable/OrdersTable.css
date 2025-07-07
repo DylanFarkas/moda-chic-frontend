@@ -35,20 +35,52 @@
 }
 
 .order-title-modal {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #993f6b;
 }
 
-.items-list {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
+.order-info p {
+  margin: 6px 0;
+  font-size: 16px;
+  text-align: left;
 }
 
-.items-list li {
-    margin-bottom: 10px;
-    font-size: 20px;
+.items-list {
+  margin-top: 20px;
+  list-style: none;
+  padding-left: 0;
+  text-align: left;
+}
+
+.product-order-item {
+  background-color: #fff;
+  padding: 12px;
+  font-weight: 300;
+  color: #636262;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.modal-subtitle {
+  font-size: 18px;
+  margin-top: 20px;
+  font-weight: bold;
+  color: #292929;
+}
+
+.order-total {
+  font-size: 18px;
+  margin-top: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.highlight-total {
+  color: #444444;
+  font-size: 20px;
+  font-weight: 300;
 }
 
 .order-items-button {
@@ -113,6 +145,9 @@
     border-color: #e91e63;
 }
 
+.order-status-cancelled {
+    color: #8d0000;
+}
 
 .order-filter-input {
     padding: 6px 10px;

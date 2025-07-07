@@ -39,8 +39,8 @@ const Navbar = () => {
     });
 
     setTimeout(() => {
-      navigate("/login");
-    });
+      window.location.href = "/login";
+    }, 2000);
   };
 
   const toggleCart = () => {

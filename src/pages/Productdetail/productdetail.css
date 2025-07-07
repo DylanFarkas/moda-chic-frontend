@@ -330,5 +330,10 @@
 .page-button.active {
   background-color: #303030;
   color: white;
-  border-color: #303030;
+  border-color: #303030;
+}
+
+.stock-left {
+  color: #333;
+  font-size: 0.9rem;
 }

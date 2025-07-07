@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllOrders, updateOrderStatus } from "../../api/orders.api";
+import Swal from 'sweetalert2';
 import "./OrdersTable.css";
 
 const OrdersTable = () => {
@@ -10,10 +11,19 @@ const OrdersTable = () => {
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [searchId, setSearchId] = useState("");
 
     // Paginación
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
+
+    const statusTranslations = {
+        pending: "Pendiente",
+        paid: "Pagado",
+        shipped: "Enviado",
+        delivered: "Entregado",
+        cancelled: "Cancelado",
+    };
 
     useEffect(() => {
         async function loadOrders() {
@@ -27,26 +37,57 @@ const OrdersTable = () => {
     useEffect(() => {
         applyFilters();
         setCurrentPage(1);
-    }, [orders, selectedStatusFilter, searchText, selectedDate]);
+    }, [selectedStatusFilter, searchText, selectedDate, searchId]);
+
+    useEffect(() => {
+        applyFilters();
+    }, [orders]);
 
     const handleStatusChange = async (orderId, newStatus) => {
         try {
             updateOrderStatus(orderId, { status: newStatus });
-            const res = await getAllOrders();
-            setOrders(res.data);
-            window.location.reload();
+
+            setOrders(prevOrders =>
+                prevOrders.map(order =>
+                    order.id === orderId ? { ...order, status: newStatus } : order
+                )
+            );
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Estado actualizado',
+                text: `El pedido #${orderId} ahora está marcado como "${statusTranslations[newStatus]}".`,
+                timer: 2000,
+                showConfirmButton: false,
+            });
+
         } catch (error) {
             console.error("Error actualizando estado:", error);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo actualizar el estado del pedido.',
+            });
         }
     };
 
     const applyFilters = () => {
         let filtered = [...orders];
 
+        // Filtro por estado
         if (selectedStatusFilter !== "all") {
             filtered = filtered.filter(order => order.status === selectedStatusFilter);
         }
 
+        // Filtro por ID (si se escribe)
+        if (searchId.trim() !== "") {
+            filtered = filtered.filter(order =>
+                order.id.toString().includes(searchId.trim())
+            );
+        }
+
+        // Filtro por texto general (nombre, email, etc.)
         if (searchText.trim() !== "") {
             const lowerSearch = searchText.toLowerCase();
             filtered = filtered.filter(order =>
@@ -57,6 +98,7 @@ const OrdersTable = () => {
             );
         }
 
+        // Filtro por fecha
         if (selectedDate) {
             filtered = filtered.filter(order =>
                 new Date(order.created_at).toISOString().startsWith(selectedDate)
@@ -65,6 +107,7 @@ const OrdersTable = () => {
 
         setFilteredOrders(filtered);
     };
+
 
     const openModal = (order) => {
         setSelectedOrder(order);
@@ -79,6 +122,7 @@ const OrdersTable = () => {
     const clearFilters = () => {
         setSelectedStatusFilter("all");
         setSearchText("");
+        setSearchId("");
         setSelectedDate("");
     };
 
@@ -95,6 +139,9 @@ const OrdersTable = () => {
         }
     };
 
+    console.log(selectedOrder);
+
+
     return (
         <div className="orders-content">
             <div className="filters-container">
@@ -110,6 +157,15 @@ const OrdersTable = () => {
                     <option value="delivered">Entregado</option>
                     <option value="cancelled">Cancelado</option>
                 </select>
+
+                <input
+                    type="number"
+                    placeholder="Buscar por # de orden"
+                    value={searchId}
+                    onChange={(e) => setSearchId(e.target.value)}
+                    className="order-filter-input"
+                />
+
 
                 <input
                     type="text"
@@ -176,18 +232,35 @@ const OrdersTable = () => {
                                     </button>
                                 </td>
                                 <td>
-                                    <select
-                                        className={`order-status-select ${order.status}`}
-                                        value={order.status}
-                                        onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                                    >
-                                        <option value="pending">Pendiente</option>
-                                        <option value="paid">Pagado</option>
-                                        <option value="shipped">Enviado</option>
-                                        <option value="delivered">Entregado</option>
-                                        <option value="cancelled">Cancelado</option>
-                                    </select>
+                                    {order.status === "cancelled" ? (
+                                        <span
+                                            className="order-status-cancelled"
+                                            onClick={() =>
+                                                Swal.fire({
+                                                    icon: 'info',
+                                                    title: 'Pedido cancelado',
+                                                    text: 'Este pedido ha sido cancelado y no se puede modificar su estado.',
+                                                })
+                                            }
+                                            style={{ cursor: "pointer" }}
+                                        >
+                                            Cancelado
+                                        </span>
+                                    ) : (
+                                        <select
+                                            className={`order-status-select ${order.status}`}
+                                            value={order.status}
+                                            onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                                        >
+                                            <option value="pending">Pendiente</option>
+                                            <option value="paid">Pagado</option>
+                                            <option value="shipped">Enviado</option>
+                                            <option value="delivered">Entregado</option>
+                                            <option value="cancelled">Cancelado</option>
+                                        </select>
+                                    )}
                                 </td>
+
                             </tr>
                         ))}
                     </tbody>
@@ -198,13 +271,32 @@ const OrdersTable = () => {
                     <div className="modal-overlay">
                         <div className="modal-content view-modal">
                             <h2 className="order-title-modal">Detalles del pedido #{selectedOrder.id}</h2>
+                            <div className="order-info">
+                                {/* <p><strong>Nombre:</strong> {selectedOrder.nombre}</p>
+                                <p><strong>Email:</strong> {selectedOrder.email}</p>
+                                <p><strong>Teléfono:</strong> {selectedOrder.telefono}</p> */}
+                                <p><strong>Dirección:</strong> {selectedOrder.direccion}</p>
+                                <p><strong>Departamento:</strong> {selectedOrder.departamento}</p>
+                                <p><strong>Ciudad:</strong> {selectedOrder.ciudad}</p>
+                                {/* <p><strong>Fecha:</strong> {new Date(selectedOrder.created_at).toLocaleString()}</p> */}
+                            </div>
+
+                            <h3 className="modal-subtitle">Productos:</h3>
                             <ul className="items-list">
                                 {selectedOrder.items.map((item, idx) => (
-                                    <li key={idx}>
+                                    <li key={idx} className="product-order-item">
                                         <strong>{item.product_name}</strong> ({item.size_name}) - x{item.quantity}
+                                        <br />
+                                        Precio unitario: ${item.price}
+                                        <br />
+                                        Subtotal: ${item.total}
                                     </li>
                                 ))}
                             </ul>
+
+                            <p className="order-total"><strong>Total del pedido:</strong> <span className="highlight-total">${parseFloat(selectedOrder.total_order).toFixed(2)}</span></p>
+
+
                             <button onClick={closeModal} className="close-button">Cerrar</button>
                         </div>
                     </div>

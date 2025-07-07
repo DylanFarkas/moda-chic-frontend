@@ -48,7 +48,7 @@ const ProductDetail = () => {
   useEffect(() => {
     async function loadReviews() {
       try {
-        const res = await fetch(http://localhost:8000/users/reviews/?product=${id});
+        const res = await fetch(`http://localhost:8000/users/reviews/?product=${id}`);
         const data = await res.json();
 
         if (Array.isArray(data)) {
@@ -68,8 +68,17 @@ const ProductDetail = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    setQuantity(1);
+  }, [selectedSize]);
 
-  const increment = () => setQuantity(prev => prev + 1);
+
+  const increment = () => {
+    const stock = getSelectedSizeStock();
+    if (quantity < stock) {
+      setQuantity(prev => prev + 1);
+    }
+  };
   const decrement = () => quantity > 1 && setQuantity(prev => prev - 1);
 
   const handleAddToCart = async () => {
@@ -141,7 +150,7 @@ const ProductDetail = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: Bearer ${token}
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
           product: product.id,
@@ -179,6 +188,12 @@ const ProductDetail = () => {
 
   if (!product) return <div>Cargando...</div>;
 
+  const getSelectedSizeStock = () => {
+    if (!product?.size_stock || !selectedSize) return null;
+    const sizeObj = product.size_stock.find(item => item.size.id === selectedSize);
+    return sizeObj?.stock || 0;
+  };
+
   return (
     <>
       <Navbar />
@@ -192,7 +207,7 @@ const ProductDetail = () => {
               <img
                 src={product.main_image}
                 alt="Miniatura principal"
-                className={thumbnail ${mainImage === product.main_image ? 'active' : ''}}
+                className={`thumbnail ${mainImage === product.main_image ? 'active' : ''}`}
                 onClick={() => setMainImage(product.main_image)}
               />
             )}
@@ -201,7 +216,7 @@ const ProductDetail = () => {
               <img
                 src={product.image}
                 alt="Miniatura secundaria"
-                className={thumbnail ${mainImage === product.image ? 'active' : ''}}
+                className={`thumbnail ${mainImage === product.image ? 'active' : ''}`}
                 onClick={() => setMainImage(product.image)}
               />
             )}
@@ -210,8 +225,8 @@ const ProductDetail = () => {
               <img
                 key={index}
                 src={img.image}
-                alt={Vista adicional ${index + 1}}
-                className={thumbnail ${mainImage === img.image ? 'active' : ''}}
+                alt={`Vista adicional ${index + 1}`}
+                className={`thumbnail ${mainImage === img.image ? 'active' : ''}`}
                 onClick={() => setMainImage(img.image)}
               />
             ))}
@@ -251,12 +266,12 @@ const ProductDetail = () => {
                       {item.size.name} {item.stock <= 0 ? '(Agotado)' : ''}
                     </option>
                   ))}
+
                 </select>
               </div>
             )}
 
             <div className="option">
-              <label>Color:</label>
               <div className="color-options">
                 {product.colors?.map((color, index) => (
                   <span
@@ -277,12 +292,23 @@ const ProductDetail = () => {
                   type="number"
                   value={quantity}
                   min={1}
+                  max={getSelectedSizeStock() || 1}
                   className="quantity-field"
                   readOnly
                 />
                 <button className="increment-button" onClick={increment}>+</button>
               </div>
             </div>
+            {(() => {
+              const stock = getSelectedSizeStock();
+              return stock > 0 && stock <= 5 ? (
+                <p className="stock-left">
+                  ¡Solo quedan {stock} unidad{stock === 1 ? '' : 'es'} disponibles!
+                </p>
+              ) : null;
+            })()}
+
+
           </div>
 
           <button
@@ -360,7 +386,7 @@ const ProductDetail = () => {
                           {Array.from({ length: totalPages }, (_, i) => (
                             <button
                               key={i}
-                              className={page-button ${currentPage === i + 1 ? 'active' : ''}}
+                              className={`page-button ${currentPage === i + 1 ? 'active' : ''}`}
                               onClick={() => setCurrentPage(i + 1)}
                             >
                               {i + 1}
@@ -388,4 +414,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default ProductDetail;
