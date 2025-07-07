@@ -10,7 +10,7 @@ export const WishlistProvider = ({ children }) => {
     const fetchWishlist = async () => {
       try {
         const token = localStorage.getItem("access_token");
-        const response = await fetch("http://localhost:8000/users/wishlist/", {
+        const response = await fetch(`${baseURL}/users/wishlist/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const categoriesApi = axios.create({
-  baseURL: "http://localhost:8000/products/api/categories/",
-});
+const baseURL = import.meta.env.VITE_API_URL;
 
+const categoriesApi = axios.create({
+  baseURL: `${baseURL}/products/api/categories/`,
+});
 export const getAllCategories = () => categoriesApi.get("/");
 
 export const getCategory = (id) => categoriesApi(`/${id}/`);

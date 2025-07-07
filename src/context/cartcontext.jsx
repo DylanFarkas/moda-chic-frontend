@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -12,7 +14,7 @@ export const CartProvider = ({ children }) => {
       setLoading(true);
       try {
         const token = localStorage.getItem("access_token");
-        const response = await fetch("http://localhost:8000/users/cart/", {
+        const response = await fetch(`${baseURL}/users/cart/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

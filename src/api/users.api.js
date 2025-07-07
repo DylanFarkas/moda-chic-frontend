@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const baseURL = import.meta.env.VITE_API_URL
+
 const usersApi = axios.create({
-  baseURL: 'http://localhost:8000/users/',
+  baseURL: `${baseURL}/users/`,
 });
 
 // Registro de usuario
@@ -9,7 +11,7 @@ export const registerUser = (userData) => usersApi.post('register/', userData);
 
 // Login de usuario
 export const loginUser = async (email, password) => {
-  const response = await axios.post("http://localhost:8000/users/login/", {
+  const response = await axios.post(`${baseURL}/users/login/`, {
     email,
     password,
   });
