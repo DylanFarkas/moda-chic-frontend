@@ -1,0 +1,134 @@
+.add-category-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.add-category-modal-content{
+    width: 350px; 
+    text-align: center;
+    background-color: #fff;
+    border-radius: 12px; 
+    padding: 20px; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.add-category-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #993f6b;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.label-name {
+    margin-bottom: 5px;
+}
+
+.add-category-input,
+.add-category-textarea {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #fff;
+    transition: all 0.2s ease;
+    margin-bottom: 5px;
+}
+
+.add-category-input:focus,
+.add-category-textarea:focus {
+    border-color: #d46a9d;
+    box-shadow: 0 0 5px rgba(212, 106, 157, 0.2);
+    outline: none;
+}
+
+.add-category-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.add-category-error {
+    color: #e53935;
+    font-size: 12px;
+    margin-top: -2px;
+}
+
+.add-category-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.add-category-cancel-button,
+.add-category-submit-button {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.add-category-cancel-button {
+    background-color: #cccccc;
+    color: #993f6b;
+}
+
+.add-category-cancel-button:hover {
+    background-color: #e8e8e8;
+    transform: translateY(-1px);
+}
+
+.add-category-submit-button {
+    background-color: #993f6b;
+    color: white;
+    box-shadow: 0 2px 6px rgba(153, 63, 107, 0.2);
+}
+
+.add-category-submit-button:hover {
+    background-color: #c4548a;
+    transform: translateY(-1px);
+}
+
+.confirm-category-alert {
+    transition: all 0.3s ease;
+    font-weight: 700;
+}
+
+.confirm-category-alert:hover {
+    background: #ffe0ed;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .add-category-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .add-category-cancel-button,
+    .add-category-submit-button {
+        width: 100%;
+    }
+}

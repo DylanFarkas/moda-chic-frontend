@@ -1,0 +1,302 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.register-container {
+    display: flex;
+    height: 100vh;
+    background: linear-gradient(135deg, #6F4559, #9c6c85);
+}
+
+.register-left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-logo {
+    width: 310px;
+    max-width: 80%;
+    animation: fadeIn 1s ease-out;
+}
+
+.register-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fffdfa;
+    border-radius: 120px 0px 0px 0px;
+    padding: 20px;
+}
+
+.register-box {
+    background-color: #fff;
+    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    width: 80%;
+    max-width: 400px;
+    animation: fadeInUp 0.8s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    color: #6F4559;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.register-form input {
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    transition: box-shadow 0.3s;
+}
+
+.register-form input:focus {
+    outline: none;
+    box-shadow: 0px 0px 8px rgba(111, 69, 89, 0.4);
+}
+
+.register-form button {
+    padding: 12px;
+    background-color: #6F4559;
+    color: #FFFDFA;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.register-form button:hover {
+    background-color: #cfbdc6;
+    color: #6F4559;
+    transform: scale(1.01);
+}
+
+
+.return-btn-register-container {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    z-index: 1000;
+}
+
+.return-register-btn {
+    padding: 10px 16px;
+    background: #fffdfa;
+    color: #6F4559;
+    border: 2px solid #6F4559;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.return-register-btn:hover {
+    background-color: #DBA362;
+    color: #fffdfa;
+    transform: scale(1.03);
+}
+
+.account-login {
+    margin-top: 20px;
+    margin-left: 30px;
+    font-weight: 500;
+    color: #313131;
+}
+
+.login-link {
+    margin-left: 20px;
+    color: #883460;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-link:hover {
+    color: #8d5471;
+}
+
+/* Modal */
+.modal-overlay-register {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(111, 69, 89, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content-register {
+    background: #fffdfa;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.modal-content-register h3 {
+    margin-bottom: 15px;
+    color: #6F4559;
+    font-size: 1.5rem;
+}
+
+.modal-content-register p {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1rem;
+}
+
+.modal-content-register button {
+    background-color: #6F4559;
+    color: #FFFDFA;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-content-register button:hover {
+    background-color: #cfbdc6;
+    color: #6F4559;
+    transform: scale(1.05);
+}
+
+.password-input-register-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-input-register {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.eye-icon-register {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6F4559;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.eye-icon-register:hover {
+    color: #ac728e;
+}
+
+.register-error-message {
+    margin-top: 10px;
+    background-color: #ffe0e6;
+    color: #883460;
+    padding: 10px 15px;
+    border: 1px solid #883460;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+    box-shadow: 0px 4px 10px rgba(136, 52, 96, 0.1);
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .register-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .register-left {
+        flex: none;
+        padding: 20px 0;
+    }
+
+    .register-logo {
+        width: 200px;
+    }
+
+    .register-right {
+        flex: none;
+        width: 100%;
+        border-radius: 0;
+        padding: 40px 20px;
+    }
+
+    .register-box {
+        width: 100%;
+        max-width: 350px;
+        padding: 25px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .return-btn-register-container {
+        top: 10px;
+        left: 10px;
+    }
+
+    .return-register-btn {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}

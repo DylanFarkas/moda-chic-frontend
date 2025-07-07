@@ -1,0 +1,616 @@
+:root {
+  --primary-color: #1a1a1a;
+  /* Negro elegante */
+  --secondary-color: #ffffff;
+  /* Fondo claro */
+  --accent-color: #9B436E;
+  /* Beige dorado para acentos */
+  --text-color: #333;
+  --light-text: #777;
+  --border-color: #e0e0e0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: var(--secondary-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 300;
+  letter-spacing: 3px;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.logo-subtitle {
+  font-size: 0.7rem;
+  letter-spacing: 1.5px;
+  color: var(--light-text);
+  text-transform: uppercase;
+}
+
+.nav-categories {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+}
+
+.nav-categories a {
+  margin: 0 1.2rem;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.nav-categories a:hover {
+  color: var(--primary-color);
+}
+
+.nav-categories a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.nav-categories a:hover::after {
+  width: 100%;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  transition: border-color 0.3s ease;
+  padding: 0.3rem 0;
+  margin-right: 20px;
+}
+
+.search-box:hover {
+  border-color: var(--primary-color);
+}
+
+.search-box input {
+  border: none;
+  padding: 0.3rem 0.5rem;
+  outline: none;
+  background: transparent;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  width: 180px;
+  color: var(--text-color);
+}
+
+.search-box button {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 0.3rem;
+  transition: color 0.3s ease;
+}
+
+.search-box button:hover {
+  color: var(--primary-color);
+}
+
+.icon {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.icon:hover {
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* Menú hamburguesa */
+.menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--primary-color);
+  z-index: 1;
+}
+
+.modal-overlay-user {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.modal-content-user {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content-user h3 {
+  color: #993f6b;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Dropdown de usuario */
+.user-info {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+
+.dropdown {
+  position: absolute;
+  top: 40px;
+  right: -80px;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  width: 200px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.dropdown p {
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dropdown button {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  width: 100%;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+
+.dropdown button:hover {
+  color: #7c7c7c;
+}
+
+/* Íconos solo visibles en mobile */
+.mobile-icons {
+  display: none;
+  flex-direction: row;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* Estilos para el contador del carrito */
+/* Contadores */
+.cart-icon-container,
+.wishlist-icon-container {
+  position: relative;
+}
+
+.cart-counter,
+.wishlist-counter {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+/* Asegura que el icono del carrito tenga espacio para el contador */
+.nav-actions .cart-icon-container,
+.mobile-icons .cart-icon-container {
+  margin-left: 5px;
+}
+
+
+/* Estilos para el carrito desplegable */
+.cart-dropdown {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100vh;
+  background-color: white;
+  box-shadow: -2px 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+}
+
+.cart-dropdown.open {
+  right: 0;
+}
+
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  background: white;
+}
+
+.cart-header h3 {
+  margin: 0 1.2rem;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.close-cart {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.close-cart:hover {
+  color: #4d4d4d;
+}
+
+.cart-items-list {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.cart-item {
+  display: flex;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f5f5f5;
+  position: relative;
+}
+
+.cart-item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 15px;
+  border-radius: 4px;
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-item-details h4 {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.cart-item-details p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.quantity-control button {
+  width: 25px;
+  height: 25px;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-control button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quantity-control span {
+  margin: 0 10px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.remove-item {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #999;
+  padding: 5px;
+}
+
+.empty-cart {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  font-size: 1rem;
+}
+
+.cart-total {
+  padding: 20px;
+  border-top: 1px solid #eee;
+  position: sticky;
+  bottom: 0;
+  background: white;
+}
+
+.cart-total p {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.cart-total span {
+  color: #000007;
+}
+
+.checkout-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+
+.checkout-button:hover {
+  background-color: #424242;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+
+  .mobile-icons {
+    display: flex;
+    margin-left: 10px;
+  }
+  
+  /* Ocultar los íconos originales en mobile */
+  .nav-actions {
+    display: none !important;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-categories {
+    display: none;
+    flex-direction: column;
+    background-color: white;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-categories.active {
+    display: flex;
+    animation: slideDown 0.3s ease-in-out;
+  }
+
+  .nav-categories a {
+    margin-bottom: 10px;
+  }
+
+  .nav-actions {
+    display: none;
+  }
+
+  .dropdown {
+    position: absolute;
+    top: 40px;
+    left: -50px;
+    margin: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    z-index: 300;
+  }
+
+  .dropdown p {
+    text-align: center;
+    width: 100%;
+  }
+
+  .dropdown button {
+    width: 100%;
+    text-align: center;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10%);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Estilos para móvil */
+@media (max-width: 1024px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-actions .search-box {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-categories {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 350px;
+    height: 100vh;
+    background-color: white;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 6rem 2rem 2rem;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+  }
+
+  .nav-categories.active {
+    right: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .nav-categories a {
+    margin: 0.5rem 0;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+  }
+
+  .nav-categories a:hover::after {
+    width: 0;
+  }
+
+  .mobile-icons {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .mobile-search {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .mobile-search input {
+    width: 100%;
+  }
+
+  .dropdown {
+    top: 35px;
+    right: -50px;
+  }
+}
