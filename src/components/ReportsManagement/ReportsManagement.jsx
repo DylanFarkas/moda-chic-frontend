@@ -18,6 +18,7 @@ const ReportsManagement = () => {
     const [topProducts, setTopProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [categorySales, setCategorySales] = useState([]);
+    const baseURL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         handleRangeChange("mes_actual");
@@ -28,13 +29,13 @@ const ReportsManagement = () => {
         setLoading(true);
         try {
             const [salesRes, productsRes, categoryRes] = await Promise.all([
-                axios.get("http://localhost:8000/reports/sales/", {
+                axios.get(`${baseURL}/reports/sales/`, {
                     params: { start_date: startDate, end_date: endDate },
                 }),
-                axios.get("http://localhost:8000/reports/top-products/", {
+                axios.get(`${baseURL}/reports/top-products/`, {
                     params: { start_date: startDate, end_date: endDate },
                 }),
-                axios.get("http://localhost:8000/reports/sales-by-category/", {
+                axios.get(`${baseURL}/reports/sales-by-category/`, {
                     params: { start_date: startDate, end_date: endDate },
                 }),
             ]);

@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 const ordersApi = axios.create({
-    baseURL: "http://localhost:8000/users/orders/",
+    baseURL: `${baseURL}/users/orders/`,
 });
 
 const getAuthHeaders = () => {

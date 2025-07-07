@@ -1,18 +1,20 @@
 import axios from "axios";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 const productsApi = axios.create({
-    baseURL: "http://localhost:8000/products/api/products/",
+  baseURL: `${baseURL}/products/api/products/`,
 });
 
 const sizesApi = axios.create({
-    baseURL: "http://localhost:8000/products/api/sizes/",
+  baseURL: `${baseURL}/products/api/sizes/`,
 });
 
 
 
 export const getAllProducts = () => productsApi.get("/");
 
-export const getProduct = (id) => productsApi(`/${id}/`);
+export const getProduct = (id) => productsApi.get(`/${id}/`);
 
 export const addProduct = (product) => productsApi.post("/", product);
 

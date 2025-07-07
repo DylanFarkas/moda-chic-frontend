@@ -28,6 +28,8 @@ const ProductDetail = () => {
   const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
   const totalPages = Math.ceil(reviews.length / reviewsPerPage);
 
+  const baseURL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     async function loadProduct() {
       try {
@@ -48,7 +50,7 @@ const ProductDetail = () => {
   useEffect(() => {
     async function loadReviews() {
       try {
-        const res = await fetch(`http://localhost:8000/users/reviews/?product=${id}`);
+        const res = await fetch(`${baseURL}/users/reviews/?product=${id}`);
         const data = await res.json();
 
         if (Array.isArray(data)) {
@@ -146,7 +148,7 @@ const ProductDetail = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:8000/users/reviews/', {
+      const res = await fetch(`${baseURL}/users/reviews/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
