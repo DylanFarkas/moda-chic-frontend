@@ -1,41 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-import ReCAPTCHA from "react-google-recaptcha";
 import { loginUser } from "../../api/users.api";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./Login.css";
 
-const SITE_KEY = "6LeY7wErAAAAAPNbS-Pip7-ABlTYDtfTSp44nV0F";
-
 const Login = () => {
   const navigate = useNavigate();
-  const [captchaValido, setCaptchaValido] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // Login.js
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    if (!captchaValido) {
-      alert("Por favor, verifica el reCAPTCHA");
-      return;
-    }
-
-    console.log("Email:", email);
-    console.log("Password:", password);
 
     try {
       const data = await loginUser(email, password);
       console.log("Respuesta del backend:", data);
 
-      // Guardar datos del usuario y token en localStorage
       localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("access_token", data.access);
 
-      // Redirección según tipo de usuario
       if (data.user.is_admin) {
         navigate("/admin");
       } else {
@@ -47,11 +32,6 @@ const Login = () => {
       console.error("Error al iniciar sesión:", error.response?.data || error.message);
       alert("Credenciales incorrectas");
     }
-  };
-
-
-  const onChangeCaptcha = (value) => {
-    setCaptchaValido(true);
   };
 
   const togglePasswordVisibility = () => {
@@ -104,9 +84,6 @@ const Login = () => {
               </p>
             </form>
 
-            <div className="recaptcha-container">
-              <ReCAPTCHA sitekey={SITE_KEY} onChange={onChangeCaptcha} />
-            </div>
             <div className="forgot-password">
               <a onClick={() => navigate("/forgot-password")} className="forgot-password-link">
                 ¿Olvidaste tu contraseña?
