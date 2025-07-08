@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { registerUser } from '../../api/users.api';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import logo from "../../assets/images/logo.png";
+import logo from "../../../public/images/logo.png";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import './Register.css';
 
