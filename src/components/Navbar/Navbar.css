@@ -466,11 +466,11 @@ body {
 /* Responsive styles */
 @media (max-width: 768px) {
 
-  .mobile-icons {
-    display: flex;
-    margin-left: 10px;
+  .mobile-icons .user-info .icon,
+  .mobile-icons>.icon {
+    font-size: 2.1rem;
   }
-  
+
   /* Ocultar los íconos originales en mobile */
   .nav-actions {
     display: none !important;
@@ -551,6 +551,12 @@ body {
   .nav-actions .search-box {
     display: none;
   }
+
+  .mobile-icons .user-info .icon,
+  .mobile-icons>.icon {
+    font-size: 2.1rem;
+  }
+
 
   .menu-toggle {
     display: block;
