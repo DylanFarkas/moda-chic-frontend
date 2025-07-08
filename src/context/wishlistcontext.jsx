@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
+const baseURL = import.meta.env.VITE_API_URL;
+
 const WishlistContext = createContext();
 
 export const WishlistProvider = ({ children }) => {

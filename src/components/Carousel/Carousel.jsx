@@ -3,9 +3,9 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import './Carousel.css';
 
 const images = [
-    'src/assets/images/banner1.png',
-    'src/assets/images/banner2.png',
-    'src/assets/images/banner4.png',
+    'public/images/banner1.png',
+    'public/images/banner2.png',
+    'public/images/banner4.png',
 ];
 
 const Carousel = () => {
