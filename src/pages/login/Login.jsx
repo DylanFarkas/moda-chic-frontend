@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import logo from "../../../public/images/logo.png";
 import { loginUser } from "../../api/users.api";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./Login.css";
